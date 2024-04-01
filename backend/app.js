@@ -21,7 +21,7 @@ const UserSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true,
-    minlength: 8,
+    minlength: 3,
     maxlength: 1024,
   }
 });
@@ -39,10 +39,44 @@ app.post("/" , (req,res) => {
     })
 })
 
-app.post("/auth/create-user" , (req,res) => {
+app.post("/auth/create-user" , async (req,res) => {
 
-    res.status(200).send({})
-})
+    // Validate request body
+    if (!req.body.name || !req.body.email || !req.body.password) {
+      return res.status(400).send({
+        error: "Name, email, and password are required fields",
+      });
+    }
+    
+  
+    // Create a new user
+    const user = new User({
+      name: req.body.name,
+      email: req.body.email,
+      password: req.body.password,
+    });
+  
+    try {
+      // Save the user to the database
+      const result = await user.save();
+      console.log(result)
+      res.status(201).send({
+        message: "User created successfully",
+        user: result,
+      });
+    } catch (error) {
+      // Handle errors
+      if (error.code === 11000) {
+        // Duplicate email error
+        return res.status(400).send({
+          error: "Email already exists",
+        });
+      }
+      res.status(500).send({
+        error: "Failed to create user",
+      });
+    }
+});
 
 app.listen(5000,function(){
     console.log("Listening on port 5000");

@@ -25,10 +25,17 @@ export default function () {
             },
             body: JSON.stringify(formData),
           });
-      
+          
           if(!response.ok){
+            alert(`Error in internal server`)
             return
           }
+
+          const data = await response.json()
+          
+          alert(`User registered successfully`)
+          navigate('/')
+
 
         } catch (error) {
           console.error(error)
