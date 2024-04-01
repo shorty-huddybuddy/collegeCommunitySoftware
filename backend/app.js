@@ -59,7 +59,7 @@ app.post("/auth/create-user" , async (req,res) => {
     try {
       // Save the user to the database
       const result = await user.save();
-      console.log(result)
+      
       res.status(201).send({
         message: "User created successfully",
         user: result,

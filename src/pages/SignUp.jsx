@@ -27,14 +27,17 @@ export default function () {
           });
           
           if(!response.ok){
-            alert(`Error in internal server`)
+            alert(`User cannot be registered`)
             return
           }
 
           const data = await response.json()
           
+          localStorage.setItem('user' , `${data.user.email}`)
+          
           alert(`User registered successfully`)
           navigate('/')
+          window.location.reload()
 
 
         } catch (error) {

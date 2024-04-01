@@ -2,8 +2,18 @@ import React from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "bootstrap-icons/font/bootstrap-icons.css";
 import 'bootstrap/dist/js/bootstrap.bundle.min';
+import { useNavigate } from 'react-router-dom';
 
 export default function LoggedInHeader() {
+
+  const navigate = useNavigate()
+
+  const handleLogout = (e) => {
+    localStorage.removeItem('user')
+    navigate('/signin')
+    window.location.reload()
+  }
+
   return (
     <div>
          <nav className="navbar navbar-expand-lg bg-primary theme-dark" data-bs-theme="dark">
@@ -42,7 +52,7 @@ export default function LoggedInHeader() {
             </ul>
           </li>
           <li className="nav-item">
-            <a className="nav-link" aria-current="page" href="/sign-in"   id='logout'>Logout</a>
+            <a className="nav-link" aria-current="page" onClick={handleLogout}   id='logout'>Logout</a>
           </li>
         </ul>
       </div>

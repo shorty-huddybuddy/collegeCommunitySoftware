@@ -10,7 +10,7 @@ import SignUp from "./pages/SignUp.jsx"
 function App() { 
   return (
     <BrowserRouter>
-      <LoggedOutHeader/>
+      {localStorage.getItem('user') ? <LoggedInHeader/> : <LoggedOutHeader/>}
       <Routes>
       <Route path="/" element = {<Home/>}></Route>
       <Route path="/signin" element = {<SignIn/>} />
