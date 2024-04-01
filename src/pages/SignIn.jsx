@@ -7,7 +7,7 @@ export default function SignIn() {
   const [formData, setFormData] = useState({})
 
   const handleLogin = async (e) => {
-    
+    e.preventDefault()
     try {
       const response = await fetch('http://localhost:5000/auth/signin', {
         method: 'POST',

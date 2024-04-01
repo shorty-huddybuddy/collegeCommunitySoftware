@@ -5,10 +5,8 @@ export default function HomePageContactUs() {
 
   const [formData, setFormData] = useState({})
 
-  console.log(formData)
-
   const handleSubmit = async (e) => {
-
+    e.preventDefault()
     try {
         const response = await fetch('http://localhost:5000/contact-us', {
           method: 'POST',
@@ -44,7 +42,7 @@ export default function HomePageContactUs() {
         <form className='mt-5'>
           <div className="row col-6 mx-auto mt-2">
             <label htmlFor="email">Email</label>
-            <input type="email" id="email" onChange={(e) => setFormData({ ...formData, [e.target.id]: e.target.value })}></input>
+            <input type="email" id="email" onChange={(e) => setFormData({ ...formData, [e.target.id]: e.target.value })} defaultValue={localStorage.getItem('user')}></input>
           </div>
           <div className="row col-6 mx-auto mt-2">
             <label htmlFor="query">Enter your query here</label>
