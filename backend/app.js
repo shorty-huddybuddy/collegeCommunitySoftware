@@ -1,6 +1,32 @@
 import express from "express"
 import cors from "cors"
+import mongoose from "mongoose"
 
+mongoose.connect('mongodb://localhost:27017/').then(() => console.log('Connected to database')).catch((error) => console.log(error))
+
+const UserSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+    minlength: 3,
+    maxlength: 50,
+  },
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+    trim: true,
+    lowercase: true,
+  },
+  password: {
+    type: String,
+    required: true,
+    minlength: 8,
+    maxlength: 1024,
+  }
+});
+
+const User = mongoose.model('User', UserSchema);
 
 const app=express()
 
