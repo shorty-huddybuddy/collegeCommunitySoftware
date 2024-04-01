@@ -15,7 +15,6 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
     unique: true,
-    trim: true,
     lowercase: true,
   },
   password: {
@@ -24,9 +23,23 @@ const UserSchema = new mongoose.Schema({
     minlength: 3,
     maxlength: 1024,
   }
-});
+})
 
-const User = mongoose.model('User', UserSchema);
+const User = mongoose.model('User', UserSchema)
+
+const QuerySchema = new mongoose.Schema({
+  email: {
+    type: String,
+    required: true,
+    lowercase: true,
+  },
+  queryMessage: {
+    type: String,
+    required: true,
+  }
+})
+
+const Query = mongoose.model('Query' , QuerySchema)
 
 const app=express()
 
@@ -60,7 +73,7 @@ app.post("/auth/create-user" , async (req,res) => {
       // Save the user to the database
       const result = await user.save();
       
-      res.status(201).send({
+      return res.status(201).send({
         message: "User created successfully",
         user: result,
       });
@@ -72,7 +85,7 @@ app.post("/auth/create-user" , async (req,res) => {
           message : "Email already exists",
         });
       }
-      res.status(500).send({
+      return res.status(500).send({
         message : "Failed to create user",
       });
     }
@@ -106,6 +119,38 @@ app.post("/auth/signin" , async (req, res) => {
   catch(error) {
     return res.status(500).send({
       message : 'Failed to sign in'
+    })
+  }
+
+})
+
+
+
+app.post("/contact-us" , async (req,res) => {
+
+  const { email , query : queryMessage } = req.body
+
+  if(!email || !queryMessage){
+    return res.status(400).send({
+      message : 'Fill all the fields'
+    })
+  }
+
+  const query = new Query({
+    email : email,
+    queryMessage : queryMessage
+  })
+
+  try{
+    const data = await query.save()
+    return res.status(201).send({
+      message : 'Query raised successfullly'
+    })
+  }
+  catch(error) {
+    console.log(error)
+    return res.status(500).send({
+      message : 'Internal server error... Could not raise query'
     })
   }
 

@@ -1,6 +1,7 @@
 import React from "react";
 import campus from "../assests/campus818901 (1).jpg"
 import campus2 from "../assests/Image-1-IIIT-Allahabad-started-1 (1).webp"
+import campus1 from "../assests/1500x.jpg"
 
 export default function HomePageCarousel() {
   return (
@@ -8,7 +9,7 @@ export default function HomePageCarousel() {
       <div id="carouselExampleAutoplaying" className="carousel slide" data-bs-ride="carousel">
         <div className="carousel-inner">
           <div className="carousel-item active">
-            <img src="https://img.jagranjosh.com/images/2022/April/1242022/1500x.jpg" className="d-block w-100" alt="carouselImage" />
+            <img src={campus1} className="d-block w-100" alt="carouselImage" />
           </div>
           <div className="carousel-item">
             <img src={campus} className="d-block w-100" alt="carouselImage" />

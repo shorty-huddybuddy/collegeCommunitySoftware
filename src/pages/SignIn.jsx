@@ -7,7 +7,7 @@ export default function SignIn() {
   const [formData, setFormData] = useState({})
 
   const handleLogin = async (e) => {
-    e.preventDefault();
+    
     try {
       const response = await fetch('http://localhost:5000/auth/signin', {
         method: 'POST',
@@ -46,10 +46,7 @@ export default function SignIn() {
         </h1>
       </div>
       <div className="container mt-4">
-        <form onSubmit={(e) => {
-          e.preventDefault()
-          // handle form submission
-        }}>
+        <form>
           <div className="row col-6 mx-auto mt-2">
             <label htmlFor="email">Email</label>
             <input type="email" id="email" onChange={(e) => setFormData({ ...formData, [e.target.id]: e.target.value })}></input>
