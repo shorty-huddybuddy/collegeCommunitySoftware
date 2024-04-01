@@ -1,7 +1,6 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
-import { wait } from '@testing-library/user-event/dist/utils'
 
 
 export default function () {
@@ -27,7 +26,8 @@ export default function () {
           });
           
           if(!response.ok){
-            alert(`User cannot be registered`)
+            const data = await response.json()
+            alert(`${data.message}`)
             return
           }
 

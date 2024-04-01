@@ -4,6 +4,7 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import { useNavigate } from 'react-router-dom';
 
+
 export default function LoggedInHeader() {
 
   const navigate = useNavigate()
@@ -52,7 +53,7 @@ export default function LoggedInHeader() {
             </ul>
           </li>
           <li className="nav-item">
-            <a className="nav-link" aria-current="page" onClick={handleLogout}   id='logout'>Logout</a>
+            <a className="nav-link cursor-pointer" aria-current="page" onClick={handleLogout}   id='logout'>Logout</a>
           </li>
         </ul>
       </div>

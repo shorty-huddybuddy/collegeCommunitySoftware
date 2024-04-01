@@ -44,7 +44,7 @@ app.post("/auth/create-user" , async (req,res) => {
     // Validate request body
     if (!req.body.name || !req.body.email || !req.body.password) {
       return res.status(400).send({
-        error: "Name, email, and password are required fields",
+        message : "Name, email, and password are required fields",
       });
     }
     
@@ -69,14 +69,47 @@ app.post("/auth/create-user" , async (req,res) => {
       if (error.code === 11000) {
         // Duplicate email error
         return res.status(400).send({
-          error: "Email already exists",
+          message : "Email already exists",
         });
       }
       res.status(500).send({
-        error: "Failed to create user",
+        message : "Failed to create user",
       });
     }
 });
+
+app.post("/auth/signin" , async (req, res) => {
+
+  const { email, password } = req.body
+
+  if ( !email || !password) {
+    return res.status(400).send({
+      error: "Email, and password are required fields"
+    })
+  }
+
+  try{
+
+    const user = await User.findOne({ email})
+
+    if(!user || user.password != password){
+      return res.status(404).send({
+        message : 'Invalid credentials'
+      })
+    }
+
+    return res.status(200).send({
+      message : 'User logged in  successfully',
+      user : user
+    })
+  }
+  catch(error) {
+    return res.status(500).send({
+      message : 'Failed to sign in'
+    })
+  }
+
+})
 
 app.listen(5000,function(){
     console.log("Listening on port 5000");
