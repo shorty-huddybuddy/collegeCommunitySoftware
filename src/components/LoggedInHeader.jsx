@@ -16,7 +16,7 @@ export default function LoggedInHeader() {
   }
 
   return (
-    <div>
+    <div className='sticky-top'>
          <nav className="navbar navbar-expand-lg bg-primary theme-dark" data-bs-theme="dark">
     <div className="container-fluid">
       <a className="navbar-brand">

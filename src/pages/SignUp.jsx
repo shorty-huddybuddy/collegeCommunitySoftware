@@ -72,7 +72,7 @@ export default function () {
         <div className="container mt-4 mx-auto row col-2">
             <button type="button" className="btn btn-success" onClick={handleClick}>Create account</button>
         </div>
-        <div className="container mt-4 row mx-auto col-3">
+        <div className="container mt-4 row mx-auto col-2">
             <span className='text-center fw-bold text-danger'> Already have an account ?</span>
             <button className='btn btn-info mt-2' onClick={() => navigate('/signin')}>Sign In</button>
         </div>

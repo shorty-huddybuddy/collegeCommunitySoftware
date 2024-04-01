@@ -63,7 +63,7 @@ export default function SignIn() {
           </div>
         </form>
       </div>
-      <div className="container mt-4 row mx-auto col-3">
+      <div className="container mt-4 row mx-auto col-2">
         <span className='text-center fw-bold text-danger'> Don't have an account ?</span>
         <button className='btn btn-info mt-2' onClick={() => navigate('/signup')}>Sign Up</button>
       </div>
