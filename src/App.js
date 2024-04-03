@@ -1,11 +1,11 @@
 import React from "react";
 import { BrowserRouter , Routes , Route } from "react-router-dom";
-import { Provider } from "react";
 import LoggedInHeader from "./components/LoggedInHeader.jsx"
 import LoggedOutHeader from "./components/LoggedOutHeader.jsx"
 import Home from "./pages/Home.jsx"
 import SignIn from "./pages/SignIn.jsx"
 import SignUp from "./pages/SignUp.jsx"
+import Profile from "./pages/Profile.jsx";
 
 function App() { 
   return (
@@ -15,6 +15,7 @@ function App() {
       <Route path="/" element = {<Home/>}></Route>
       <Route path="/signin" element = {<SignIn/>} />
       <Route path="/signup" element = {<SignUp/>} />
+      <Route path="/profile" element = {<Profile/>} />
       </Routes>
     </BrowserRouter>
   );
