@@ -46,6 +46,10 @@ const app=express()
 app.use(cors())
 app.use(express.json())
 
+app.listen(5000,function(){
+  console.log("Listening on port 5000");
+})
+
 app.post("/" , (req,res) => {
     res.send({
         name : req.body.name,
@@ -144,7 +148,7 @@ app.post("/contact-us" , async (req,res) => {
   try{
     const data = await query.save()
     return res.status(201).send({
-      message : 'Query raised successfullly'
+      message : 'Query raised successfullly... We will email you back soon'
     })
   }
   catch(error) {
@@ -156,6 +160,3 @@ app.post("/contact-us" , async (req,res) => {
 
 })
 
-app.listen(5000,function(){
-    console.log("Listening on port 5000");
-})

@@ -23,8 +23,7 @@ export default function HomePageContactUs() {
         }
   
         const data = await response.json()
-        alert('Query raised successfully')
-        setFormData({})
+        alert(`${data.message}`)
   
       } catch (error) {
         console.error(error)
@@ -42,11 +41,11 @@ export default function HomePageContactUs() {
         <form className='mt-5'>
           <div className="row col-6 mx-auto mt-2">
             <label htmlFor="email">Email</label>
-            <input type="email" id="email" onChange={(e) => setFormData({ ...formData, [e.target.id]: e.target.value })} defaultValue={localStorage.getItem('user')}></input>
+            <input type="email" id="email" onChange={(e) => setFormData({ ...formData, [e.target.id]: e.target.value })}></input>
           </div>
           <div className="row col-6 mx-auto mt-2">
             <label htmlFor="query">Enter your query here</label>
-            <input type="textarea" id="query" onChange={(e) => setFormData({ ...formData, [e.target.id]: e.target.value })}></input>
+            <input type="textarea" id="query" onChange={(e) => setFormData({ ...formData , [e.target.id]: e.target.value })}></input>
           </div>
           <div className="container mt-4 mx-auto row col-2">
             <button type="submit" className="btn btn-success" onClick={handleSubmit}>Contact Us</button>
