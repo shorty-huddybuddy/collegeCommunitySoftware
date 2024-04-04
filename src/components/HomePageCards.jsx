@@ -1,7 +1,7 @@
 import React from 'react'
-import card1 from "../assests/_9fd17189-e8dd-4f52-8d28-0e8c3c919b03.jpeg"
-import card2 from "../assests/_b7f51fcc-4cf6-4b85-804d-96d652c69226.jpeg"
-import card3 from "../assests/_a14aa402-ac6c-4c44-b6f0-7cec7d463b19.jpeg"
+import card1 from "../assets/_9fd17189-e8dd-4f52-8d28-0e8c3c919b03.jpeg"
+import card2 from "../assets/_b7f51fcc-4cf6-4b85-804d-96d652c69226.jpeg"
+import card3 from "../assets/_a14aa402-ac6c-4c44-b6f0-7cec7d463b19.jpeg"
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "bootstrap-icons/font/bootstrap-icons.css";
 import 'bootstrap/dist/js/bootstrap.bundle.min';

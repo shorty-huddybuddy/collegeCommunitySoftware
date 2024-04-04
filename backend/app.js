@@ -22,6 +22,16 @@ const UserSchema = new mongoose.Schema({
     required: true,
     minlength: 3,
     maxlength: 1024,
+  },
+  photoURL : {
+    type : String,
+    default : 'illustration-of-human-icon-user-symbol-icon-modern-design-on-blank-background-free-vector.jpg'
+  },
+  about : {
+    type : String,
+  },
+  passoutYear : {
+    type : Number,
   }
 })
 
@@ -160,3 +170,36 @@ app.post("/contact-us" , async (req,res) => {
 
 })
 
+app.get("/profile" , async (req,res) => {
+
+  const { user } = req.query
+
+  if(!user){
+    return res.status(400).send({
+      message : 'Fill all fields'
+    })
+  }
+
+  
+  try{
+
+    const user_from_database = await User.findOne({ email : user})
+  
+    if(!user_from_database){
+      return res.status(401).send({
+        message : 'This is not a registered user'
+      })
+    }
+
+    res.status(201).send({
+      message : 'User found',
+      user : user_from_database
+    })
+    
+  }
+  catch(error){
+    return res.status(500).send({
+      message : 'Internal server occurred while fetching user profile'
+    })
+  }
+})

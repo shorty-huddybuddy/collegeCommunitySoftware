@@ -1,7 +1,7 @@
 import React from "react";
-import campus from "../assests/campus818901 (1).jpg"
-import campus2 from "../assests/Image-1-IIIT-Allahabad-started-1 (1).webp"
-import campus1 from "../assests/1500x.jpg"
+import campus from "../assets/campus818901 (1).jpg"
+import campus2 from "../assets/Image-1-IIIT-Allahabad-started-1 (1).webp"
+import campus1 from "../assets/1500x.jpg"
 
 export default function HomePageCarousel() {
   return (

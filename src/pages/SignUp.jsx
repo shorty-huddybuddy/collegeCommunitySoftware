@@ -33,10 +33,8 @@ export default function () {
 
           const data = await response.json()
           
-          localStorage.setItem('user' , `${data.user.email}`)
-          
           alert(`User registered successfully`)
-          navigate('/')
+          navigate('/signin')
           window.location.reload()
 
 

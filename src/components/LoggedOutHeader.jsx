@@ -8,11 +8,15 @@ export default function LoggedOutHeader() {
     <div>
       <div >
         <nav className="navbar navbar-expand-lg bg-primary theme-dark" data-bs-theme="dark">
-          <div className="container-fluid text-center">
-            <a className="navbar-brand  mx-auto">
+          <div className="container-fluid d-flex justify-between">
+            <a className="navbar-brand">
               <i className="bi bi-globe-central-south-asia p-4"></i>
               Connect IIITA
             </a>
+            <div>
+              <a className="theme-dark px-4 text-white text-decoration-none" href="/signin">Sign in</a>
+              <a className="theme-dark px-4 text-white text-decoration-none" href="/signup">Sign up</a>
+            </div>
           </div>
         </nav>
       </div>
