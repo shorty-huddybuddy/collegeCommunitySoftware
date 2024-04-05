@@ -54,7 +54,7 @@ const Query = mongoose.model('Query' , QuerySchema)
 const app=express()
 
 app.use(cors())
-app.use(express.json())
+app.use(express.json({ limit: '10mb' }))
 
 app.listen(5000,function(){
   console.log("Listening on port 5000");
@@ -269,6 +269,44 @@ app.put("/user/updateYear" , async (req, res) => {
     return res.status(201).send({
       message : 'Passout year has been updated',
       passoutYear
+    })
+
+  }
+  catch(error){
+    return res.status(500).send({
+      message : 'Internal server error'
+    })
+  }
+
+})
+
+app.put("/user/updateImage" , async (req, res) => {
+  const { email , imageURL} = req.body
+
+  if(!email || !imageURL){
+    return res.status(400).send({
+      message : 'All fields are necessary'
+    })
+  }
+
+  const user = await User.findOne( { email })
+
+  if(!user){
+    return res.status(401).send({
+      message : 'No such user found'
+    })
+  }
+
+  try{
+    await User.findOneAndUpdate(
+      {email : email},
+      {photoURL : imageURL},
+      {new : true}
+    )
+
+    return res.status(201).send({
+      message : 'Photo has been updated',
+      imageURL
     })
 
   }

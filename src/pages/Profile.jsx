@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import "bootstrap-icons/font/bootstrap-icons.css";
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import { useParams } from 'react-router-dom';
+import { render } from '@testing-library/react';
 
 export default function Profile() {
 
@@ -30,6 +31,13 @@ export default function Profile() {
 
   }
 
+  let name = localStorage.getItem('name')
+  let email = localStorage.getItem('email')
+  let photoURL = localStorage.getItem('photoURL')
+  let about = localStorage.getItem('about')
+  let passoutYear = localStorage.getItem('passoutYear')
+  let user = localStorage.getItem('user')
+
   const setUser = async () => {
     const user = await findUser(username)
     localStorage.setItem('name' , user.name)
@@ -37,16 +45,16 @@ export default function Profile() {
     localStorage.setItem('photoURL' , user.photoURL)
     localStorage.setItem('about' , user.about)
     localStorage.setItem('passoutYear' , user.passoutYear)
+    name = user.name
+    email = user.email
+    photoURL = user.photoURL
+    about = user.about
+    passoutYear = user.passoutYear
   } 
   
   setUser()
-  
-  let name = localStorage.getItem('name')
-  let email = localStorage.getItem('email')
-  let photoURL = localStorage.getItem('photoURL')
-  let about = localStorage.getItem('about')
-  let passoutYear = localStorage.getItem('passoutYear')
-  let user = localStorage.getItem('user')
+
+
 
   const [profileAbout, setprofileAbout]  = useState(localStorage.getItem('about'))
 
@@ -226,13 +234,53 @@ export default function Profile() {
     </div>
   )
 
+  const handleImageChange = (event) => {
+    const imageFile = event.target.files[0];
+    const reader = new FileReader();
+  
+    reader.onloadend = async () => {
+      // Process the image data (e.g., display preview)
+      const imageURL = reader.result
+      try{
+        const response = await fetch('http://localhost:5000/user/updateImage', {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ email, imageURL })
+        });
+    
+        if (!response.ok) {
+          const data = await response.json()
+          alert(`${data.message}`)
+          return
+        }
+        const data = await response.json()
+        localStorage.setItem('photo' , data.photoURL)
+        photoURL = data.imageURL
+        document.querySelector('#profilePhoto').setAttribute("src" , reader.result)
+        alert(`${data.message}`)
+        window.location.reload()
+
+      } catch (error) {
+        console.error(error)
+      }
+
+
+    };
+  
+    reader.readAsDataURL(imageFile);
+  };
+
   return (
     <div className='container mt-5'>
       <div>
         <h1 className='text-center text-info'>Welcome {name}</h1>
       </div>
-      <div className="mt-5">
-        <img src={require(`../assets/${photoURL}`)} className="rounded mx-auto d-block w-25 h-25" alt="profilePhoto" />
+      <div className="mt-5 text-center">
+        <img src={photoURL} className="rounded mx-auto d-block w-25 h-25" alt="profilePhoto" id="profilePhoto"/>
+          <label htmlFor="photoSelector" style={{cursor : 'pointer'}} className='bg-success p-2 text-white border rounded-3'>Update photo</label>
+          <input type="file" name="fileInput" id="photoSelector" className='visually-hidden' accept="image/*" onChange={handleImageChange}/>
       </div>
       <div className='mt-4 text-center'>
         {about === 'undefined' ? defaultAbout : About}
