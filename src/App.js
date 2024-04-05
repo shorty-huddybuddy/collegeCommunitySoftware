@@ -5,7 +5,7 @@ import LoggedOutHeader from "./components/LoggedOutHeader.jsx"
 import Home from "./pages/Home.jsx"
 import SignIn from "./pages/SignIn.jsx"
 import SignUp from "./pages/SignUp.jsx"
-import Profile from "./pages/Profile.jsx";
+import Profile from "./pages/Profile.jsx"
 
 function App() { 
   return (

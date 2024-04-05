@@ -241,3 +241,41 @@ app.put("/user/updateAbout" , async (req, res) => {
   }
 
 })
+
+app.put("/user/updateYear" , async (req, res) => {
+  const { email , passoutYear} = req.body
+
+  if(!email || !passoutYear){
+    return res.status(400).send({
+      message : 'All fields are necessary'
+    })
+  }
+
+  const user = await User.findOne( { email })
+
+  if(!user){
+    return res.status(401).send({
+      message : 'No such user found'
+    })
+  }
+
+  try{
+    await User.findOneAndUpdate(
+      {email : email},
+      {passoutYear : passoutYear},
+      {new : true}
+    )
+
+    return res.status(201).send({
+      message : 'Passout year has been updated',
+      passoutYear
+    })
+
+  }
+  catch(error){
+    return res.status(500).send({
+      message : 'Internal server error'
+    })
+  }
+
+})
