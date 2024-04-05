@@ -15,11 +15,7 @@ export default function LoggedInHeader() {
     window.location.reload()
   }
 
-  const handleProfile = (e) => {
-    const user_email = localStorage.getItem('user')
-    navigate(`/profile/${user_email}`)
-    return
-  }
+  const user_email = localStorage.getItem('user')
 
   return (
     <div className='sticky-top'>
@@ -38,7 +34,7 @@ export default function LoggedInHeader() {
             <a className="nav-link" aria-current="page" href="/" id="home"  >Home</a>
           </li>
           <li className="nav-item">
-            <a className="nav-link" aria-current="page" id="profile"  onClick={handleProfile} style={{cursor : 'pointer'}}>Profile</a>
+            <a className="nav-link" aria-current="page" id="profile" style={{cursor : 'pointer'}} href={`/profile/${user_email}`}  >Profile</a>
           </li>
           <li className="nav-item">
             <a className="nav-link" aria-current="page" href="/messaging" id="messaging"    >Messaging</a>
