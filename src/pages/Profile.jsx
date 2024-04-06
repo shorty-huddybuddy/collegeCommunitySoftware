@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "bootstrap-icons/font/bootstrap-icons.css";
 import 'bootstrap/dist/js/bootstrap.bundle.min';
-import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom'
+
+const UserDetails = () => {
 
   const [user, setUser] = useState([]);
 
@@ -52,30 +54,17 @@ import { useParams } from 'react-router-dom';
         document.querySelector('#profilePhoto').setAttribute("src" , imageURL)
         alert(`${data.message}`)
 
-    } catch (error) {
-      console.error(error)
-      alert('Failed to fetch user profile')
-    }
+      } catch (error) {
+        console.error(error)
+      }
 
+
+    };
+  
+    reader.readAsDataURL(imageFile);
   }
 
-  const setUser = async () => {
-    const user = await findUser(username)
-    localStorage.setItem('name' , user.name)
-    localStorage.setItem('email' , user.email)
-    localStorage.setItem('photoURL' , user.photoURL)
-    localStorage.setItem('about' , user.about)
-    localStorage.setItem('passoutYear' , user.passoutYear)
-  } 
-  
-  setUser()
-  
-  let name = localStorage.getItem('name')
-  let email = localStorage.getItem('email')
-  let photoURL = localStorage.getItem('photoURL')
-  let about = localStorage.getItem('about')
-  let passoutYear = localStorage.getItem('passoutYear')
-  let user = localStorage.getItem('user')
+  const [aboutToggle , setAboutToggle] = useState(true)
 
   const [profileAbout , setProfileAbout] = useState(user.about)
 
@@ -251,6 +240,7 @@ import { useParams } from 'react-router-dom';
     </div>
   )
 
+  
   return (
     <div className='container mt-5'>
       <div>
@@ -258,8 +248,10 @@ import { useParams } from 'react-router-dom';
           Welcome {user.name}
         </h1>
       </div>
-      <div className="mt-5">
-        <img src={require(`../assets/${photoURL}`)} className="rounded mx-auto d-block w-25 h-25" alt="profilePhoto" />
+      <div className='mt-5 text-center'>
+        <img src={user.photoURL} className='rounded mx-auto d-block w-25 h-25' alt='profilePhoto' id='profilePhoto'></img>
+        <label htmlFor="photoSelector" style={{cursor : 'pointer'}} className='bg-success p-2 text-white border rounded-3'>Update photo</label>
+        <input type="file" name="fileInput" id="photoSelector" className='visually-hidden' accept="image/*" onChange={handleImageChange}/>
       </div>
       <div className='mt-4 text-center'>
         {user.about ? About : defaultAbout}
