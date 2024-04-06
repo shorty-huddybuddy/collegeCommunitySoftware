@@ -11,7 +11,6 @@ export default function LoggedInHeader() {
 
   const handleLogout = (e) => {
     localStorage.removeItem('user')
-    localStorage.setItem('count' , 0)
     window.location.reload()
   }
 

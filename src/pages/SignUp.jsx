@@ -56,7 +56,11 @@ export default function () {
                 <div className="row col-6 mx-auto mt-2">
                     <label htmlFor="email">Name</label>
                     <input type="text" id="name" onChange={handleChange}></input>
-                </div>                
+                </div>  
+                <div className="row col-6 mx-auto mt-2">
+                    <label htmlFor="email">Phone Number</label>
+                    <input type="number" id="phoneNumber" onChange={handleChange}></input>
+                </div>               
                 <div className="row col-6 mx-auto mt-2">
                     <label htmlFor="email">Email</label>
                     <input type="email" id="email" onChange={handleChange}></input>

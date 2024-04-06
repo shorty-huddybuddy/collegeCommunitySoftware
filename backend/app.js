@@ -33,6 +33,12 @@ const UserSchema = new mongoose.Schema({
   },
   passoutYear : {
     type : Number,
+  },
+  phoneNumber : {
+    type : Number,
+    required : true,
+    min: -9007199254740991, // minimum value for int64
+    max: 9007199254740991
   }
 })
 
@@ -80,6 +86,7 @@ app.post("/auth/create-user" , async (req,res) => {
     // Create a new user
     const user = new User({
       name: req.body.name,
+      phoneNumber : req.body.phoneNumber,
       email: req.body.email,
       password: req.body.password,
     });
