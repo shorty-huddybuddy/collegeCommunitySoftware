@@ -28,6 +28,8 @@ const UserDetails = () => {
     fetchData()
   }, [])
 
+  const isLoggedIn = (localStorage.getItem('user') == user.email)
+
   const handleImageChange = (event) => {
     const imageFile = event.target.files[0];
     const reader = new FileReader();
@@ -102,7 +104,7 @@ const UserDetails = () => {
       <span>About {user.name} :</span>
       <input type='text' defaultValue={user.about} className='text-center mx-4 p-1' disabled={aboutToggle} id = 'profileAbout' onChange={(e) => setProfileAbout(e.target.value)}></input>
       <button className='btn' onClick={() => setAboutToggle(false)}>
-        {aboutToggle && <i className='bi bi-pencil-fill'></i>}
+        {(aboutToggle && isLoggedIn) && <i className='bi bi-pencil-fill'></i>}
       </button>
       <button className='btn' onClick = {updateAbout}>
         {profileAbout && <i className="bi bi-check-circle-fill text-success"></i>}
@@ -199,7 +201,7 @@ const UserDetails = () => {
   const PassoutYear = (
     <div>
       <span>Passout year :</span>
-      <select disabled={yearToggle} defaultValue={parseInt(user.passoutYear,10)} onChange={(e) => setYear(e.target.value)} className='mx-4 p-1'>
+      <select disabled={yearToggle} defaultValue={user.passoutYear} onChange={(e) => setYear(e.target.value)} className='mx-4 p-1'>
         <option value={2000}>2000</option>
         <option value={2001}>2001</option>
         <option value={2002}>2002</option>
@@ -232,32 +234,31 @@ const UserDetails = () => {
         <option value={2029}>2029</option>
       </select>
       <button className='btn' onClick={() => setYearToggle(false)}>
-        {yearToggle && <i className='bi bi-pencil-fill'></i>}
+        {(yearToggle && isLoggedIn) && <i className='bi bi-pencil-fill'></i>}
       </button>
       {!yearToggle && <button className='btn btn-success mt-2' onClick = {updateYear}>
         Update passout year
       </button>}
     </div>
   )
-
   
   return (
     <div className='container mt-5'>
       <div>
         <h1 className='text-center text-info'>
-          Welcome {user.name}
+          {isLoggedIn && 'Welcome'} {user.name}
         </h1>
       </div>
       <div className='mt-5 text-center'>
         <img src={user.photoURL} className='rounded mx-auto d-block w-25 h-25' alt='profilePhoto' id='profilePhoto'></img>
-        <label htmlFor="photoSelector" style={{cursor : 'pointer'}} className='bg-success p-2 text-white border rounded-3'>Update photo</label>
+        {isLoggedIn && <label htmlFor="photoSelector" style={{cursor : 'pointer'}} className='bg-success p-2 text-white border rounded-3'>Update photo</label>}
         <input type="file" name="fileInput" id="photoSelector" className='visually-hidden' accept="image/*" onChange={handleImageChange}/>
       </div>
       <div className='mt-4 text-center'>
-        {user.about ? About : defaultAbout}
+        {(!isLoggedIn) ? About : (user.about ? About : defaultAbout)}
       </div>
       <div className='mt-4 text-center'>
-        {user.passoutYear ? PassoutYear : defaultPassoutYear}
+        {(!isLoggedIn) ? PassoutYear : (user.passoutYear ? PassoutYear : defaultPassoutYear)}
       </div>
     </div>
   )

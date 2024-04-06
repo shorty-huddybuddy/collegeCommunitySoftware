@@ -182,6 +182,8 @@ app.get("/profile" , async (req,res) => {
 
   const { user } = req.query
 
+  console.log(req.query)
+
   if(!user){
     return res.status(400).send({
       message : 'Fill all fields'
@@ -192,6 +194,8 @@ app.get("/profile" , async (req,res) => {
   try{
 
     const user_from_database = await User.findOne({ email : user})
+
+    // console.log(user_from_database)
   
     if(!user_from_database){
       return res.status(401).send({

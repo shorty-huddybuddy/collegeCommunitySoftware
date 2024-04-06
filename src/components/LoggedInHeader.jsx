@@ -32,8 +32,12 @@ export default function LoggedInHeader() {
           <li className="nav-item">
             <a className="nav-link" aria-current="page" href="/" id="home"  >Home</a>
           </li>
-          <li className="nav-item">
-            <a className="nav-link" aria-current="page" id="profile" style={{cursor : 'pointer'}} href={`/profile/${user_email}`}  >Profile</a>
+          <li className="nav-item dropdown">
+            <a className="nav-link dropdown-toggle" href='#' role='button' data-bs-toggle = 'dropdown' aria-expanded='false'>Profile</a>
+            <ul className='dropdown-menu'>
+              <li><a className='dropdown-item' href={`/profile/${user_email}`} id='myProfile'>My profile</a></li>
+              <li><a className='dropdown-item' href='http://localhost:3000/searchProfile'id='myProfile'>View other's profile</a></li>
+            </ul>
           </li>
           <li className="nav-item">
             <a className="nav-link" aria-current="page" href="/messaging" id="messaging"    >Messaging</a>
