@@ -1,66 +1,77 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "bootstrap-icons/font/bootstrap-icons.css";
 import 'bootstrap/dist/js/bootstrap.bundle.min';
-import { useParams } from 'react-router-dom';
-import { render } from '@testing-library/react';
+import { useParams } from 'react-router-dom'
 
-export default function Profile() {
+const UserDetails = () => {
+
+  const [user, setUser] = useState([]);
 
   const { username } = useParams()
 
-  const findUser = async(username) => {
-
-    try{
-      const response = await fetch(`http://localhost:5000/profile?user=${username}`)
-      
-      if(!response.ok){
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/profile?user=' +  username)
         const data = await response.json()
+        if(!response.ok){
+          alert(`${data.message}`)
+        }
+        setUser(data.user)
+      } catch (error) {
+        console.error(error)
+        alert('Failed to fetch user profile')
+      }
+    };
+
+    fetchData()
+  }, [])
+
+  const handleImageChange = (event) => {
+    const imageFile = event.target.files[0];
+    const reader = new FileReader();
+  
+    reader.onloadend = async () => {
+      // Process the image data (e.g., display preview)
+      const imageURL = reader.result
+      const { email } = user 
+      try{
+        const response = await fetch('http://localhost:5000/user/updateImage', {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ email, imageURL })
+        });
+    
+        if (!response.ok) {
+          const data = await response.json()
+          alert(`${data.message}`)
+          return
+        }
+        const data = await response.json()
+        document.querySelector('#profilePhoto').setAttribute("src" , imageURL)
         alert(`${data.message}`)
-        return
+
+      } catch (error) {
+        console.error(error)
       }
 
-      const { user }  = await response.json()
 
-      return user
-
-    } catch (error) {
-      console.error(error)
-      alert('Failed to fetch user profile')
-    }
-
+    };
+  
+    reader.readAsDataURL(imageFile);
   }
 
-  let name = localStorage.getItem('name')
-  let email = localStorage.getItem('email')
-  let photoURL = localStorage.getItem('photoURL')
-  let about = localStorage.getItem('about')
-  let passoutYear = localStorage.getItem('passoutYear')
-  let user = localStorage.getItem('user')
+  const [aboutToggle , setAboutToggle] = useState(true)
 
-  const setUser = async () => {
-    const user = await findUser(username)
-    localStorage.setItem('name' , user.name)
-    localStorage.setItem('email' , user.email)
-    localStorage.setItem('photoURL' , user.photoURL)
-    localStorage.setItem('about' , user.about)
-    localStorage.setItem('passoutYear' , user.passoutYear)
-    name = user.name
-    email = user.email
-    photoURL = user.photoURL
-    about = user.about
-    passoutYear = user.passoutYear
-  } 
-  
-  setUser()
-
-
-
-  const [profileAbout, setprofileAbout]  = useState(localStorage.getItem('about'))
+  const [profileAbout , setProfileAbout] = useState(user.about)
 
   const updateAbout = async (e) => {
 
-    const profileAboutData = profileAbout.profileAbout
+    const profileAboutData = profileAbout
+    const { email } = user
 
     try {
       const response = await fetch('http://localhost:5000/user/updateAbout', {
@@ -71,15 +82,14 @@ export default function Profile() {
         body: JSON.stringify({ email, profileAboutData })
       });
   
+      const data = await response.json()
+
       if (!response.ok) {
-        const data = await response.json()
         alert(`${data.message}`)
         return
       }
   
-      const data = await response.json()
       alert(`${data.message}`)
-      localStorage.setItem('about' , data.profileAboutData)
       window.location.reload()
 
     } catch (error) {
@@ -87,17 +97,15 @@ export default function Profile() {
     }
   }
 
-  const [aboutToggle, setAboutToggle] = useState(true)
-
   const About = (
     <div>
-      <span>About {name} :</span>
-      <input type='text' defaultValue={about} className='text-center mx-4 p-1' disabled={aboutToggle} id ='profileAbout'onChange={(e)=>setprofileAbout({...profileAbout , [e.target.id] : e.target.value})}></input>
-      <button className='btn' onClick={()=>setAboutToggle(false)}>
+      <span>About {user.name} :</span>
+      <input type='text' defaultValue={user.about} className='text-center mx-4 p-1' disabled={aboutToggle} id = 'profileAbout' onChange={(e) => setProfileAbout(e.target.value)}></input>
+      <button className='btn' onClick={() => setAboutToggle(false)}>
         {aboutToggle && <i className='bi bi-pencil-fill'></i>}
       </button>
       <button className='btn' onClick = {updateAbout}>
-        {profileAbout.profileAbout && <i className="bi bi-check-circle-fill text-success"></i>}
+        {profileAbout && <i className="bi bi-check-circle-fill text-success"></i>}
       </button>
     </div>
   )
@@ -105,9 +113,9 @@ export default function Profile() {
   const defaultAbout = (
     <div className='col-6 mx-auto'>
       <label htmlFor="profileAbout">Add something about yourself</label>
-      <input type='text-area' id = 'profileAbout' className='mx-3' onChange={(e) => setprofileAbout({...profileAbout , [e.target.id] : e.target.value}) }></input>
+      <input type='text-area' id = 'profileAbout' className='mx-3' onChange={(e) => setProfileAbout(e.target.value) }></input>
       <button className='btn' onClick = {updateAbout}>
-        {profileAbout.profileAbout && <i className="bi bi-check-circle-fill text-success"></i>}
+        {profileAbout && <i className="bi bi-check-circle-fill text-success"></i>}
       </button>
     </div>
   )
@@ -117,6 +125,7 @@ export default function Profile() {
   const updateYear = async (e) => {
 
     const passoutYear = year
+    const { email } = user
 
     try {
       const response = await fetch('http://localhost:5000/user/updateYear', {
@@ -127,15 +136,14 @@ export default function Profile() {
         body: JSON.stringify({ email, passoutYear })
       });
   
+      const data = await response.json()
+
       if (!response.ok) {
-        const data = await response.json()
         alert(`${data.message}`)
         return
       }
-  
-      const data = await response.json()
+
       alert(`${data.message}`)
-      localStorage.setItem('passoutYear' , data.passoutYear)
       window.location.reload()
 
     } catch (error) {
@@ -143,11 +151,10 @@ export default function Profile() {
     }
   }
 
-
   const defaultPassoutYear = (
     <div className='col-6 mx-auto'>
       <div className="form-floating">
-        <select className="form-select" id="floatingSelect" aria-label="Floating label select example" onChange={(e) => setYear([e.target.id] = e.target.value)} defaultValue={2026}>
+        <select className="form-select" id="floatingSelect" aria-label="Floating label select example" onChange={(e) => setYear(e.target.value)} defaultValue={2026}>
         <option value={2000}>2000</option>
         <option value={2001}>2001</option>
         <option value={2002}>2002</option>
@@ -185,7 +192,6 @@ export default function Profile() {
           Update passout year
         </button>
     </div>
-    
   )
 
   const [yearToggle, setYearToggle] = useState(true)
@@ -193,7 +199,7 @@ export default function Profile() {
   const PassoutYear = (
     <div>
       <span>Passout year :</span>
-      <select disabled={yearToggle} defaultValue={parseInt(passoutYear,10)} onChange={(e) => setYear([e.target.id] = e.target.value)} className='mx-4 p-1'>
+      <select disabled={yearToggle} defaultValue={parseInt(user.passoutYear,10)} onChange={(e) => setYear(e.target.value)} className='mx-4 p-1'>
         <option value={2000}>2000</option>
         <option value={2001}>2001</option>
         <option value={2002}>2002</option>
@@ -234,60 +240,27 @@ export default function Profile() {
     </div>
   )
 
-  const handleImageChange = (event) => {
-    const imageFile = event.target.files[0];
-    const reader = new FileReader();
   
-    reader.onloadend = async () => {
-      // Process the image data (e.g., display preview)
-      const imageURL = reader.result
-      try{
-        const response = await fetch('http://localhost:5000/user/updateImage', {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ email, imageURL })
-        });
-    
-        if (!response.ok) {
-          const data = await response.json()
-          alert(`${data.message}`)
-          return
-        }
-        const data = await response.json()
-        localStorage.setItem('photo' , data.photoURL)
-        photoURL = data.imageURL
-        document.querySelector('#profilePhoto').setAttribute("src" , reader.result)
-        alert(`${data.message}`)
-        window.location.reload()
-
-      } catch (error) {
-        console.error(error)
-      }
-
-
-    };
-  
-    reader.readAsDataURL(imageFile);
-  };
-
   return (
     <div className='container mt-5'>
       <div>
-        <h1 className='text-center text-info'>Welcome {name}</h1>
+        <h1 className='text-center text-info'>
+          Welcome {user.name}
+        </h1>
       </div>
-      <div className="mt-5 text-center">
-        <img src={photoURL} className="rounded mx-auto d-block w-25 h-25" alt="profilePhoto" id="profilePhoto"/>
-          <label htmlFor="photoSelector" style={{cursor : 'pointer'}} className='bg-success p-2 text-white border rounded-3'>Update photo</label>
-          <input type="file" name="fileInput" id="photoSelector" className='visually-hidden' accept="image/*" onChange={handleImageChange}/>
+      <div className='mt-5 text-center'>
+        <img src={user.photoURL} className='rounded mx-auto d-block w-25 h-25' alt='profilePhoto' id='profilePhoto'></img>
+        <label htmlFor="photoSelector" style={{cursor : 'pointer'}} className='bg-success p-2 text-white border rounded-3'>Update photo</label>
+        <input type="file" name="fileInput" id="photoSelector" className='visually-hidden' accept="image/*" onChange={handleImageChange}/>
       </div>
       <div className='mt-4 text-center'>
-        {about === 'undefined' ? defaultAbout : About}
+        {user.about ? About : defaultAbout}
       </div>
       <div className='mt-4 text-center'>
-        {passoutYear === 'undefined' ? defaultPassoutYear : PassoutYear}
+        {user.passoutYear ? PassoutYear : defaultPassoutYear}
       </div>
     </div>
   )
 }
+
+export default UserDetails
