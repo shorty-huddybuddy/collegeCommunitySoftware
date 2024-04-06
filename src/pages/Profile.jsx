@@ -201,7 +201,7 @@ const UserDetails = () => {
   const PassoutYear = (
     <div>
       <span>Passout year :</span>
-      <select disabled={yearToggle} defaultValue={user.passoutYear} onChange={(e) => setYear(e.target.value)} className='mx-4 p-1'>
+      <select disabled={yearToggle} value={user.passoutYear} onChange={(e) => setYear(e.target.value)} className='mx-4 p-1'>
         <option value={2000}>2000</option>
         <option value={2001}>2001</option>
         <option value={2002}>2002</option>
@@ -241,6 +241,51 @@ const UserDetails = () => {
       </button>}
     </div>
   )
+
+  const [phoneNumber , setPhoneNumber] = useState(user.phoneNumber)
+
+  const updatePhone = async (e) => {
+
+    const { email } = user
+
+    try {
+      const response = await fetch('http://localhost:5000/user/updatePhone', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email, phoneNumber })
+      });
+  
+      const data = await response.json()
+
+      if (!response.ok) {
+        alert(`${data.message}`)
+        return
+      }
+
+      alert(`${data.message}`)
+      window.location.reload()
+
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  const [phoneToggle , setPhoneToggle] = useState(true)
+
+  const PhoneNumber = (
+    <div>
+      <span>Phone Number :</span>
+      <input type='number' disabled={phoneToggle} defaultValue={user.phoneNumber} className='mx-3 text-center' onChange={(e) => setPhoneNumber(e.target.value)}></input>
+      <button className='btn' onClick={() => setPhoneToggle(false)}>
+        {(phoneToggle && isLoggedIn) && <i className='bi bi-pencil-fill'></i>}
+      </button>
+      {!phoneToggle && <button className='btn btn-success mt-2' onClick = {updatePhone}>
+        Update phone number
+      </button>}
+    </div>
+  )
   
   return (
     <div className='container mt-5'>
@@ -256,6 +301,9 @@ const UserDetails = () => {
       </div>
       <div className='mt-4 text-center'>
         {(!isLoggedIn) ? About : (user.about ? About : defaultAbout)}
+      </div>
+      <div className='mt-4 text-center'>
+        {(!isLoggedIn) ? PhoneNumber : PhoneNumber}
       </div>
       <div className='mt-4 text-center'>
         {(!isLoggedIn) ? PassoutYear : (user.passoutYear ? PassoutYear : defaultPassoutYear)}

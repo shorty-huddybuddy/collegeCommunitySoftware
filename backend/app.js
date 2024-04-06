@@ -37,6 +37,7 @@ const UserSchema = new mongoose.Schema({
   phoneNumber : {
     type : Number,
     required : true,
+    unique : true,
     min: -9007199254740991, // minimum value for int64
     max: 9007199254740991
   }
@@ -292,6 +293,44 @@ app.put("/user/updateYear" , async (req, res) => {
 
 })
 
+app.put("/user/updatePhone" , async (req, res) => {
+  const { email , phoneNumber} = req.body
+
+  if(!email || !phoneNumber){
+    return res.status(400).send({
+      message : 'All fields are necessary'
+    })
+  }
+
+  const user = await User.findOne( { email })
+
+  if(!user){
+    return res.status(401).send({
+      message : 'No such user found'
+    })
+  }
+
+  try{
+    await User.findOneAndUpdate(
+      {email : email},
+      {phoneNumber : phoneNumber},
+      {new : true}
+    )
+
+    return res.status(201).send({
+      message : 'Phone Number has been updated',
+      phoneNumber
+    })
+
+  }
+  catch(error){
+    return res.status(500).send({
+      message : 'Internal server error'
+    })
+  }
+
+})
+
 app.put("/user/updateImage" , async (req, res) => {
   const { email , imageURL} = req.body
 
@@ -324,6 +363,29 @@ app.put("/user/updateImage" , async (req, res) => {
   }
   catch(error){
     return res.status(500).send({
+      message : 'Internal server error'
+    })
+  }
+
+})
+
+app.get("/searchUsers" , async (req , res) => {
+
+  const { name }  = req.query
+
+  try{
+    // Use a regular expression to perform a case-insensitive search for the name substring
+    const users = await User.find({ name: { $regex: name, $options: 'i' } })
+
+    res.status(201).send({
+      message : `Found ${users.length} users` , 
+      users
+    })
+
+  }
+  catch(error){
+    console.log(error)
+    res.status(500).send({
       message : 'Internal server error'
     })
   }
