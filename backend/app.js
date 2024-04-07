@@ -83,7 +83,29 @@ const BloodRequestSchema = new mongoose.Schema({
 
 const BloodRequest = mongoose.model('Blood Request' , BloodRequestSchema)
 
+const NotificationSchema = new mongoose.Schema({
+  message : {
+    type : String,
+    required : true
+  },
+  link : {
+    type : String,
+  },
+  usersToBeNotified : {
+    type : Array,
+    default : []
+  },
+  userWhoSent : {
+    type : Object,
+    required : true,
+  },
+  time : {
+    type : Date,
+    default : Date.now()
+  }
+})
 
+const Notification = mongoose.model('Notification' , NotificationSchema)
 
 const app=express()
 
@@ -502,6 +524,68 @@ app.post("/veiwUserBloodRequests" , async (req, res) => {
     res.status(201).send({
       message : 'Found your responses' , 
       responses
+    })
+
+  }
+  catch(error){
+    console.log(error)
+    res.status(500).send({
+      message : 'Internal Server Error'
+    })
+  }
+
+})
+
+app.post("/sendNotification" , async(req,res) => {
+  const { message , users , user , link } = req.body
+
+  try{
+
+    const notification = new Notification({
+      message : message,
+      userWhoSent : user,
+      usersToBeNotified : users,
+      link : link
+    })
+
+    const response = await notification.save()
+
+    res.status(201).send({
+      message : 'Notification sent',
+      response
+    })
+
+  }
+  catch(error){
+    console.log(error)
+    res.status(500).send({
+      message : 'Internal Server Error'
+    })
+  }
+
+})
+
+
+
+app.post("/viewNotifications" , async(req,res) => {
+
+  const { user_email } = req.body
+
+  try{
+
+    let allNotifications = await Notification.find({}).sort({ time : -1 })
+    let notifications = []
+    allNotifications.map((notification) => {
+      notification.usersToBeNotified.map((user) => {
+        if(user.email == user_email){
+          notifications.push(notification)
+        }
+      })
+    })
+
+    res.status(201).send({
+      message : 'Notifications received successfully',
+      notifications
     })
 
   }

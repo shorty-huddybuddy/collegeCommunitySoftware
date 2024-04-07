@@ -290,7 +290,7 @@ const UserDetails = () => {
   return (
     <div className='container mt-5 bg-dark-subtle'>
       <div className='pt-5'>
-        <h1 className='text-center text-warning'>
+        <h1 className='text-center text-warning-emphasis'>
           {isLoggedIn && 'Welcome'} {user.name}
         </h1>
       </div>

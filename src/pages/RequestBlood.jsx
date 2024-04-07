@@ -6,14 +6,16 @@ import 'bootstrap/dist/js/bootstrap.bundle.min';
 export default function BloodGroupTracking() {
 
     const[BG , setBG] = useState("O+")
-    const [user, setUser] = useState([]);
+    const [user, setUser] = useState({})
+    const [users , setUsers] = useState([])
 
-    const username = localStorage.getItem('user')    
+
+    const user_email = localStorage.getItem('user')    
 
     useEffect(() => {
       const fetchData = async () => {
         try {
-          const response = await fetch('http://localhost:5000/profile?user=' +  username)
+          const response = await fetch('http://localhost:5000/profile?user=' +  user_email)
           const data = await response.json()
           if(!response.ok){
             alert(`${data.message}`)
@@ -25,7 +27,32 @@ export default function BloodGroupTracking() {
         }
       };
   
-      fetchData()
+      
+      const fetchUsers = async(req,res) => {
+        
+        const query =''
+        
+        try {
+          const response = await fetch('http://localhost:5000/search?query=' +  query)
+          const data = await response.json()
+          if(!response.ok){
+            alert(`${data.message}`)
+            return
+          }
+          setUsers(data.users)
+          
+        } catch (error) {
+          console.error(error)
+          alert('Failed to fetch name profile')
+          return
+        }
+        
+      }
+      
+    fetchData()
+
+    fetchUsers()
+
     }, [])
 
 
@@ -56,12 +83,43 @@ export default function BloodGroupTracking() {
         alert('Could not request blood')
       }
 
+      try{
+
+        const usersExceptMe = users
+        for(let i = 0; i < usersExceptMe.length ; i ++ ){
+          if(usersExceptMe[i].email === user.email){
+            usersExceptMe.splice(i , 1)
+          }
+        }
+
+        const message = `${user.name} needs blood`
+        const link = 'http://localhost:3000/trackBloodRequests'
+
+        const response = await fetch('http://localhost:5000/sendNotification',{
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({message , users : usersExceptMe , user , link}),
+        })
+        const data = await response.json()
+        if(!response.ok){
+          alert(`${data.message}`)
+        }
+        console.log(data.message)
+      }
+      catch(error){
+        console.log(error)
+        alert('Could not notify other users')
+      }
+
     }
 
+
   return (
-    <div className='mt-5 bg-dark-subtle container'>
-        <div className='container text-center pt-3'>
-            <h1 className='text-warning'>Request Blood</h1>
+    <div className='mt-5 bg-dark-subtle container py-4'>
+        <div className='container text-center'>
+            <h1 className='text-warning-emphasis'>Request Blood</h1>
         </div>
         <div className='mt-5 col-3 mx-auto'>
         <label htmlFor='selectBG'>Choose the blood group of the patient</label>
@@ -75,8 +133,8 @@ export default function BloodGroupTracking() {
             <option value="O-">O-</option>
             <option value="AB-">AB-</option>
         </select>
-        <div className='mt-3 d-flex pb-3'>
-          <button className='btn btn-outline-success mx-auto text-center' onClick={handleSubmit}>Request Now</button>
+        <div className='mt-3 d-flex'>
+          <button className='btn btn-outline-danger mx-auto text-center' onClick={handleSubmit}>Request Now</button>
         </div>
         </div>
     </div>

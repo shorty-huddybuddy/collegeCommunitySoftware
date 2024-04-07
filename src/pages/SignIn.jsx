@@ -39,8 +39,8 @@ export default function SignIn() {
   };
 
   return (
-    <div>
-      <div className="container mt-5 text-center text-dark">
+    <div className='container bg-dark-subtle pb-5'>
+      <div className="container mt-5 text-center text-dark pt-5">
         <h1>
           Sign In
         </h1>
@@ -56,7 +56,7 @@ export default function SignIn() {
             <input type="password" id="password" onChange={(e) => setFormData({ ...formData, [e.target.id]: e.target.value })}></input>
           </div>
           <div className="container mt-4 mx-auto row col-1">
-            <button type="submit" className="btn btn-outline-warning" onClick={handleLogin}>Log In</button>
+            <button type="submit" className="btn btn-warning" onClick={handleLogin}>Log In</button>
           </div>
         </form>
       </div>

@@ -41,17 +41,17 @@ export default function ViewResponses() {
   return (
     <div className='mt-5'>
       <div className='container text-center'>
-        <h1 className='text-warning'>View responses for your requests</h1>
+        <h1 className='text-warning-emphasis'>View responses for your requests</h1>
       </div>
       <div className='mt-5'>
         {responses.map((request) => (
-          <div className='bg-secondary-subtle mt-4 p-3' key={request._id}> 
-            <span className='ms-5'>Requested Blood Group : {request.BGType}</span>
-            <span  className='ms-5'>User Requested : {request.userRequested.name}</span>
-            <span className='ms-5'>Time requested : {request.timeRequested.substr(0,10)}</span>
-            <button className='btn btn-outline-secondary ms-5' onClick={(e) => navigate(`/profile/${request.userRequested.email}`)}>View Patient Profile</button>
-            <span className='ms-5'>Request Fulfilled : {request.fulfilled ? 'Yes' : 'No'}</span>
-            {user_email !== request.userRequested.email && !request.fulfilled && <button className='ms-5 btn btn-outline-danger' onClick={(e) => handleDonatation(e , request._id)}>Donate Blood</button>}
+          <div className='bg-secondary-subtle mt-4 p-3 d-flex justify-content-evenly' key={request._id}> 
+            <span className=''>Requested Blood Group : {request.BGType}</span>
+            <span  className=''>User Requested : {request.userRequested.name}</span>
+            <span className=''>Time requested : {request.timeRequested.substr(0,10)}</span>
+            <button className='btn btn-outline-secondary ' onClick={(e) => navigate(`/profile/${request.userRequested.email}`)}>View Patient Profile</button>
+            <span className=''>Request Fulfilled : {request.fulfilled ? 'Yes' : 'No'}</span>
+            {user_email !== request.userRequested.email && !request.fulfilled && <button className=' btn btn-outline-danger' onClick={(e) => handleDonatation(e , request._id)}>Donate Blood</button>}
             {request.fulfilled && <span className='ms-5'>Donated User : {request.userDonated.name}</span>}
           </div>
         ))}

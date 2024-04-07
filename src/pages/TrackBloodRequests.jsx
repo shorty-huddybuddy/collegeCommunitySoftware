@@ -44,7 +44,7 @@ export default function TrackBloodRequests() {
 
   },[])
 
-  const handleDonatation = async (e , id) => {
+  const handleDonatation = async (e , id , index) => {
 
     e.preventDefault()
 
@@ -63,12 +63,52 @@ export default function TrackBloodRequests() {
       }
 
       alert(`${data.message}`)
-      window.location.reload()
 
     }
     catch(error){
       console.log(error)
       alert('Could not donate')
+    }
+
+    const query = bloodRequests[index].userRequested.name
+    console.log(query)
+    let patient;
+
+    try {
+      const response = await fetch('http://localhost:5000/search?query=' +  query)
+      const data = await response.json()
+      if(!response.ok){
+        alert(`${data.message}`)
+        return
+      }
+      patient = data.users[0]
+      
+    }
+    catch(error){
+      alert('Could not fetch the details of the patient')
+    }
+
+    const message = `${user.name} is willing to donate blood to you`
+    const link = 'http://localhost:3000/viewResponses'
+
+    try{
+
+      const response = await fetch('http://localhost:5000/sendNotification',{
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ message , users : [patient] , user , link })
+      })
+      const data = await response.json()
+      if(!response.ok){
+        alert(`${data.message}`)
+      }
+      console.log(data.message)
+      window.location.reload()
+    }
+    catch(error){
+      alert('Could not notify receiver')
     }
 
   }
@@ -88,18 +128,18 @@ export default function TrackBloodRequests() {
   return (
     <div className='mt-5'>
       <div className='container text-center'>
-        <h1 className='text-warning'>All Blood Requests</h1>
+        <h1 className='text-warning-emphasis'>All Blood Requests</h1>
       </div>
       <div className='mt-5'>
-        {bloodRequests.map((request) => (
-          <div className='bg-secondary-subtle mt-4 p-3' key={request._id}> 
-            <span className='ms-5'>Requested Blood Group : {request.BGType}</span>
-            <span  className='ms-5'>User Requested : {request.userRequested.name.split(' ')[0]}</span>
-            <span className='ms-5'>Time requested : {request.timeRequested.substr(0,10)}</span>
-            <button className='btn btn-outline-secondary ms-5' onClick={(e) => navigate(`/profile/${request.userRequested.email}`)}>View Patient Profile</button>
-            <span className='ms-5'>Request Fulfilled : {request.fulfilled ? 'Yes' : 'No'}</span>
-            {user_email !== request.userRequested.email && !request.fulfilled && <button className='ms-5 btn btn-outline-danger' onClick={(e) => handleDonatation(e , request._id)}>Donate Blood</button>}
-            {request.fulfilled && <span className='ms-5'>Donated User : {request.userDonated.name}</span>}
+        {bloodRequests.map((request , index) => (
+          <div className='bg-secondary-subtle mt-4 p-3 d-flex justify-content-evenly' key={request._id}> 
+            <span className=''>Requested Blood Group : {request.BGType}</span>
+            <span  className=''>User Requested : {request.userRequested.name.split(' ')[0]}</span>
+            <span className=''>Time requested : {request.timeRequested.substr(0,10)}</span>
+            <button className='btn btn-outline-secondary ' onClick={(e) => navigate(`/profile/${request.userRequested.email}`)}>View Patient Profile</button>
+            <span className=''>Request Fulfilled : {request.fulfilled ? 'Yes' : 'No'}</span>
+            {user_email !== request.userRequested.email && !request.fulfilled && <button className='ms-5 btn btn-outline-danger' onClick={(e) => handleDonatation(e , request._id , index)}>Donate Blood</button>}
+            {request.fulfilled && <span className=''>Donated User : {request.userDonated.name}</span>}
             <div className='text-center mt-2'>
               <div className="btn-group">
                 <button type="button" className="btn btn-outline-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
