@@ -183,8 +183,6 @@ app.get("/profile" , async (req,res) => {
 
   const { user } = req.query
 
-  console.log(req.query)
-
   if(!user){
     return res.status(400).send({
       message : 'Fill all fields'
@@ -369,16 +367,16 @@ app.put("/user/updateImage" , async (req, res) => {
 
 })
 
-app.get("/searchUsers" , async (req , res) => {
+app.get("/search" , async (req , res) => {
 
-  const { name }  = req.query
+  const { query }  = req.query
 
   try{
     // Use a regular expression to perform a case-insensitive search for the name substring
-    const users = await User.find({ name: { $regex: name, $options: 'i' } })
+    const users = await User.find({ name: { $regex: query, $options: 'i' } })
 
     res.status(201).send({
-      message : `Found ${users.length} users` , 
+      message : `Search Request fulfilled` , 
       users
     })
 

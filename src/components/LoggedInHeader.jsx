@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "bootstrap-icons/font/bootstrap-icons.css";
 import 'bootstrap/dist/js/bootstrap.bundle.min';
@@ -14,13 +14,41 @@ export default function LoggedInHeader() {
     window.location.reload()
   }
 
+  const [search , setSearch] = useState('')
+
   const user_email = localStorage.getItem('user')
+
+  const handleSearch = async (e) => {
+
+    if(e.keyCode === 13){
+
+      e.preventDefault()
+      const query = search
+
+      try {
+          const response = await fetch('http://localhost:5000/search?query=' +  query)
+          const data = await response.json()
+          if(!response.ok){
+            alert(`${data.message}`)
+            return
+          }
+          navigate(`/search?query=${query}` , { state : data })
+          
+      } catch (error) {
+          console.error(error)
+          alert('Failed to fetch name profile')
+          return
+      }
+
+    }
+
+}
 
   return (
     <div className='sticky-top'>
          <nav className="navbar navbar-expand-lg bg-primary theme-dark" data-bs-theme="dark">
     <div className="container-fluid">
-      <a className="navbar-brand">
+      <a className="navbar-brand" href='/'>
         <i className="bi bi-globe-central-south-asia p-4"></i>
         Connect IIITA
       </a>
@@ -32,12 +60,8 @@ export default function LoggedInHeader() {
           <li className="nav-item">
             <a className="nav-link" aria-current="page" href="/" id="home"  >Home</a>
           </li>
-          <li className="nav-item dropdown">
-            <a className="nav-link dropdown-toggle" href='#' role='button' data-bs-toggle = 'dropdown' aria-expanded='false'>Profile</a>
-            <ul className='dropdown-menu'>
-              <li><a className='dropdown-item' href={`/profile/${user_email}`} id='myProfile'>My profile</a></li>
-              <li><a className='dropdown-item' href='http://localhost:3000/searchProfile'id='myProfile'>View other's profile</a></li>
-            </ul>
+          <li className="nav-item">
+            <a className="nav-link" aria-current="page" href={`/profile/${user_email}`} id="home"  >My Profile</a>
           </li>
           <li className='nav-item'><a className="nav-link" href="/notifications"  id="notifications"  >Notifications</a></li><li><hr className="dropdown-divider"/></li>
           <li className="nav-item">
@@ -59,6 +83,9 @@ export default function LoggedInHeader() {
           <li className="nav-item">
             <a className="nav-link cursor-pointer" aria-current="page" onClick={handleLogout}   id='logout' href ='/signin'>Logout</a>
           </li>
+          <form role="search">
+            <input className="form-control mx-3" type="search" id='searchInput' placeholder="Search" aria-label="Search" style={{width : '100px' , height : '40px'}} onChange={(e) => setSearch(e.target.value)} onKeyDown={handleSearch}/>
+          </form>
         </ul>
       </div>
     </div>
