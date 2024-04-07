@@ -70,8 +70,9 @@ export default function LoggedInHeader() {
           <li className="nav-item dropdown">
             <a className="nav-link dropdown-toggle" href='#' role='button' data-bs-toggle = 'dropdown' aria-expanded='false'>Blood donation</a>
             <ul className='dropdown-menu'>
+              <li><a className='dropdown-item' href='/trackBloodRequests'id='myProfile'>Track Blood Requests</a></li>
               <li><a className='dropdown-item' href='/requestBlood' id='myProfile'>Request Blood</a></li>
-              <li><a className='dropdown-item' href='#'id='myProfile'>View responses</a></li>
+              <li><a className='dropdown-item' href='/viewResponses'id='myProfile'>View responses</a></li>
             </ul>
           </li>
           <li className='nav-item'><a className="nav-link" href="/lost-and-found"  id="lost-and-found"  >Lost and Found</a></li>

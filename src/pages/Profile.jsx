@@ -290,7 +290,7 @@ const UserDetails = () => {
   return (
     <div className='container mt-5'>
       <div>
-        <h1 className='text-center text-info'>
+        <h1 className='text-center text-warning'>
           {isLoggedIn && 'Welcome'} {user.name}
         </h1>
       </div>

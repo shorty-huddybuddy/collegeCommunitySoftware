@@ -7,7 +7,9 @@ import SignIn from "./pages/SignIn.jsx"
 import SignUp from "./pages/SignUp.jsx"
 import Profile from "./pages/Profile.jsx"
 import Search from "./pages/Search.jsx";
-import BloodGroupTracking from "./pages/BloodGroupTracking.jsx";
+import RequestBlood from "./pages/RequestBlood.jsx";
+import TrackBloodRequests from "./pages/TrackBloodRequests.jsx";
+import ViewResponses from "./pages/ViewResponses.jsx";
 
 function App() { 
   return (
@@ -19,7 +21,9 @@ function App() {
       <Route path="/signup" element = {<SignUp/>} />
       <Route path="/profile/:username" element = {<Profile/>} />
       <Route path="/search" element = {<Search/>} />
-      <Route path="/requestBlood" element = {<BloodGroupTracking/>} />
+      <Route path="/requestBlood" element = {<RequestBlood/>} />
+      <Route path="/trackBloodRequests" element ={<TrackBloodRequests/>} />
+      <Route path="/viewResponses" element={<ViewResponses/>}></Route>
       </Routes>
     </BrowserRouter>
   );

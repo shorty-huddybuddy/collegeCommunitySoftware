@@ -59,6 +59,30 @@ const QuerySchema = new mongoose.Schema({
 
 const Query = mongoose.model('Query' , QuerySchema)
 
+const BloodRequestSchema = new mongoose.Schema({
+  BGType : {
+    type : String ,
+    required : true
+  },
+  userRequested : {
+    type : Object,
+    required : true
+  },
+  timeRequested : {
+    type : Date,
+    default : Date.now()
+  },
+  fulfilled : {
+    type : Boolean,
+    default : false,
+  },
+  userDonated : {
+    type : Object
+  }
+})
+
+const BloodRequest = mongoose.model('Blood Request' , BloodRequestSchema)
+
 const app=express()
 
 app.use(cors())
@@ -385,6 +409,104 @@ app.get("/search" , async (req , res) => {
     console.log(error)
     res.status(500).send({
       message : 'Internal server error'
+    })
+  }
+
+})
+
+app.post("/requestBlood" , async(req,res) => {
+  const { BGType , user } = req.body
+  try{
+    
+    const bgRequest = new BloodRequest({
+      BGType : BGType,
+      userRequested : user
+    })
+
+    const BGRequest = await bgRequest.save()
+
+    res.status(201).send({
+      message : 'A request has been put',
+      BGRequest
+    })
+
+  }
+  catch(error){
+    console.log(error)
+    res.status(500).send({
+      message : 'Internal Server Error'
+    })
+  }
+})
+
+app.get("/findBloodRequests" , async(req, res) => {
+
+  try{
+
+    const bloodRequests = await BloodRequest.find({}).sort({ fulfilled : 1 }).sort({ timeRequested : -1 })
+
+    res.status(201).send({
+      message : 'Found blood requests',
+      bloodRequests
+    })
+
+  }
+  catch(error){
+    console.log(error)
+    res.status(500).send({
+      message : 'Internal Server Error'
+    })
+  }
+})
+
+app.put("/updateBloodRequest" , async(req, res) => {
+
+  const { id , user } = req.body
+
+  try{
+    await BloodRequest.findOneAndUpdate(
+      {_id : id},
+      {fulfilled : true},
+      {new : true}
+    )
+    await BloodRequest.findOneAndUpdate(
+      {_id : id},
+      {userDonated : user},
+      {new : true}
+    )
+
+    res.status(201).send({
+      message : 'Donate request processed... The receiver will be notified'
+    })
+
+  }
+  catch(error){
+    console.log(error)
+    res.status(500).send({
+      message : 'Internal server error'
+    })
+  }
+
+})
+
+app.post("/veiwUserBloodRequests" , async (req, res) => {
+
+  const { user_email } = req.body
+
+  try{
+
+    const responses = await BloodRequest.find({ 'userRequested.email' : user_email })
+
+    res.status(201).send({
+      message : 'Found your responses' , 
+      responses
+    })
+
+  }
+  catch(error){
+    console.log(error)
+    res.status(500).send({
+      message : 'Internal Server Error'
     })
   }
 
