@@ -190,7 +190,7 @@ const UserDetails = () => {
         </select>
         <label htmlFor="floatingSelect">Select passout year</label>
       </div>
-        <button className='btn btn-success mt-2' onClick = {updateYear}>
+        <button className='btn btn-outline-dark mt-2' onClick = {updateYear}>
           Update passout year
         </button>
     </div>
@@ -236,7 +236,7 @@ const UserDetails = () => {
       <button className='btn' onClick={() => setYearToggle(false)}>
         {(yearToggle && isLoggedIn) && <i className='bi bi-pencil-fill'></i>}
       </button>
-      {!yearToggle && <button className='btn btn-success mt-2' onClick = {updateYear}>
+      {!yearToggle && <button className='btn btn-outline-dark mt-2' onClick = {updateYear}>
         Update passout year
       </button>}
     </div>
@@ -281,15 +281,15 @@ const UserDetails = () => {
       <button className='btn' onClick={() => setPhoneToggle(false)}>
         {(phoneToggle && isLoggedIn) && <i className='bi bi-pencil-fill'></i>}
       </button>
-      {!phoneToggle && <button className='btn btn-success mt-2' onClick = {updatePhone}>
+      {!phoneToggle && <button className='btn btn-outline-dark mt-2' onClick = {updatePhone}>
         Update phone number
       </button>}
     </div>
   )
   
   return (
-    <div className='container mt-5'>
-      <div>
+    <div className='container mt-5 bg-dark-subtle'>
+      <div className='pt-5'>
         <h1 className='text-center text-warning'>
           {isLoggedIn && 'Welcome'} {user.name}
         </h1>
@@ -305,7 +305,7 @@ const UserDetails = () => {
       <div className='mt-4 text-center'>
         {(!isLoggedIn) ? PhoneNumber : PhoneNumber}
       </div>
-      <div className='mt-4 text-center'>
+      <div className='mt-4 text-center pb-5'>
         {(!isLoggedIn) ? PassoutYear : (user.passoutYear ? PassoutYear : defaultPassoutYear)}
       </div>
     </div>

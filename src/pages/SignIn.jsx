@@ -40,7 +40,7 @@ export default function SignIn() {
 
   return (
     <div>
-      <div className="container mt-5 text-center text-success">
+      <div className="container mt-5 text-center text-dark">
         <h1>
           Sign In
         </h1>
@@ -56,13 +56,13 @@ export default function SignIn() {
             <input type="password" id="password" onChange={(e) => setFormData({ ...formData, [e.target.id]: e.target.value })}></input>
           </div>
           <div className="container mt-4 mx-auto row col-1">
-            <button type="submit" className="btn btn-success" onClick={handleLogin}>Log In</button>
+            <button type="submit" className="btn btn-outline-warning" onClick={handleLogin}>Log In</button>
           </div>
         </form>
       </div>
       <div className="container mt-4 row mx-auto col-2">
         <span className='text-center fw-bold text-danger'> Don't have an account ?</span>
-        <button className='btn btn-info mt-2' onClick={() => navigate('/signup')}>Sign Up</button>
+        <button className='btn btn-outline-dark mt-2' onClick={() => navigate('/signup')}>Sign Up</button>
       </div>
     </div>
   )

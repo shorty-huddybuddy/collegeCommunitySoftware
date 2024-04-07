@@ -46,7 +46,7 @@ export default function LoggedInHeader() {
 
   return (
     <div className='sticky-top'>
-         <nav className="navbar navbar-expand-lg bg-primary theme-dark" data-bs-theme="dark">
+         <nav className="navbar navbar-expand-lg bg-dark theme-dark" data-bs-theme="dark">
     <div className="container-fluid">
       <a className="navbar-brand" href='/'>
         <i className="bi bi-globe-central-south-asia p-4"></i>

@@ -59,9 +59,9 @@ export default function BloodGroupTracking() {
     }
 
   return (
-    <div className='mt-5'>
-        <div className='container text-center'>
-            <h1 className='text-info'>Request Blood</h1>
+    <div className='mt-5 bg-dark-subtle container'>
+        <div className='container text-center pt-3'>
+            <h1 className='text-warning'>Request Blood</h1>
         </div>
         <div className='mt-5 col-3 mx-auto'>
         <label htmlFor='selectBG'>Choose the blood group of the patient</label>
@@ -75,8 +75,8 @@ export default function BloodGroupTracking() {
             <option value="O-">O-</option>
             <option value="AB-">AB-</option>
         </select>
-        <div className='mt-3 d-flex'>
-          <button className='btn btn-success mx-auto text-center' onClick={handleSubmit}>Request Now</button>
+        <div className='mt-3 d-flex pb-3'>
+          <button className='btn btn-outline-success mx-auto text-center' onClick={handleSubmit}>Request Now</button>
         </div>
         </div>
     </div>

@@ -73,6 +73,18 @@ export default function TrackBloodRequests() {
 
   }
 
+  const bloodGroupCompatibilities = new Map([
+    ['A+', [ 'A+', 'A-', 'O+', 'O-' ]],
+    ['A-', [ 'A-', 'O-' ]],
+    ['B+', [ 'B+', 'B-', 'O+', 'O-' ]],
+    ['B-', [ 'B-', 'O-' ]],
+    ['AB+', [ 'A+', 'A-', 'B+', 'B-', 'O+', 'O-' ]],
+    ['AB-', [ 'A-', 'B-', 'O-' ]],
+    ['O+', [ 'O+', 'O-' ]],
+    ['O-', [ 'O-' ]],
+  ]); 
+
+
   return (
     <div className='mt-5'>
       <div className='container text-center'>
@@ -82,12 +94,25 @@ export default function TrackBloodRequests() {
         {bloodRequests.map((request) => (
           <div className='bg-secondary-subtle mt-4 p-3' key={request._id}> 
             <span className='ms-5'>Requested Blood Group : {request.BGType}</span>
-            <span  className='ms-5'>User Requested : {request.userRequested.name}</span>
+            <span  className='ms-5'>User Requested : {request.userRequested.name.split(' ')[0]}</span>
             <span className='ms-5'>Time requested : {request.timeRequested.substr(0,10)}</span>
             <button className='btn btn-outline-secondary ms-5' onClick={(e) => navigate(`/profile/${request.userRequested.email}`)}>View Patient Profile</button>
             <span className='ms-5'>Request Fulfilled : {request.fulfilled ? 'Yes' : 'No'}</span>
             {user_email !== request.userRequested.email && !request.fulfilled && <button className='ms-5 btn btn-outline-danger' onClick={(e) => handleDonatation(e , request._id)}>Donate Blood</button>}
             {request.fulfilled && <span className='ms-5'>Donated User : {request.userDonated.name}</span>}
+            <div className='text-center mt-2'>
+              <div className="btn-group">
+                <button type="button" className="btn btn-outline-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                  View compatible donar types
+                </button>
+                <ul className="dropdown-menu">
+                  {bloodGroupCompatibilities.get(`${request.BGType}`).map((donar, index) => (
+                    <li key={index}><a className="dropdown-item" href="#">{donar}</a></li>
+                  ))
+                  }
+                </ul>
+              </div>
+            </div>
           </div>
         ))}
       </div>

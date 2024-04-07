@@ -46,7 +46,7 @@ export default function () {
 
   return (
     <div>
-        <div className="container mt-5 text-center text-success">
+        <div className="container mt-5 text-center text-dark">
             <h1>
                 Sign Up
             </h1>
@@ -72,11 +72,11 @@ export default function () {
             </form>
         </div>
         <div className="container mt-4 mx-auto row col-2">
-            <button type="button" className="btn btn-success" onClick={handleClick}>Create account</button>
+            <button type="button" className="btn btn-outline-warning" onClick={handleClick}>Create account</button>
         </div>
         <div className="container mt-4 row mx-auto col-2">
             <span className='text-center fw-bold text-danger'> Already have an account ?</span>
-            <button className='btn btn-info mt-2' onClick={() => navigate('/signin')}>Sign In</button>
+            <button className='btn btn-outline-dark mt-2' onClick={() => navigate('/signin')}>Sign In</button>
         </div>
     </div>
   )
