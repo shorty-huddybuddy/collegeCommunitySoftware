@@ -40,6 +40,10 @@ const UserSchema = new mongoose.Schema({
     unique : true,
     min: -9007199254740991, // minimum value for int64
     max: 9007199254740991
+  },
+  alumnus : {
+    type : Boolean,
+    required : true
   }
 })
 
@@ -171,7 +175,7 @@ app.post("/auth/create-user" , async (req,res) => {
     // Validate request body
     if (!req.body.name || !req.body.email || !req.body.password) {
       return res.status(400).send({
-        message : "Name, email, and password are required fields",
+        message : "All the fields are required",
       });
     }
     
@@ -182,6 +186,7 @@ app.post("/auth/create-user" , async (req,res) => {
       phoneNumber : req.body.phoneNumber,
       email: req.body.email,
       password: req.body.password,
+      alumnus : req.body.alumnus
     });
   
     try {
@@ -194,6 +199,7 @@ app.post("/auth/create-user" , async (req,res) => {
       });
     } catch (error) {
       // Handle errors
+      console.log(error)
       if (error.code === 11000) {
         // Duplicate email error
         return res.status(400).send({

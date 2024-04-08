@@ -6,7 +6,9 @@ import { useState } from 'react'
 export default function () {
     
     const navigate = useNavigate()
-    const [formData , setFormData]  = useState({})
+    const [formData , setFormData]  = useState({
+        'alumnus' : false
+    })
 
     const handleChange = (e) => {
         setFormData({
@@ -42,7 +44,7 @@ export default function () {
           console.error(error)
           alert('Failed to create user. Please try again.')
         }
-      };
+      }
 
   return (
     <div className='container bg-dark-subtle pb-5'>
@@ -55,19 +57,28 @@ export default function () {
             <form>
                 <div className="row col-6 mx-auto mt-2">
                     <label htmlFor="email">Name</label>
-                    <input type="text" id="name" onChange={handleChange}></input>
+                    <input type="text" id="name" className='form-control' onChange={handleChange}></input>
                 </div>  
                 <div className="row col-6 mx-auto mt-2">
                     <label htmlFor="email">Phone Number</label>
-                    <input type="number" id="phoneNumber" onChange={handleChange}></input>
+                    <input type="number" id="phoneNumber" className='form-control' onChange={handleChange}></input>
                 </div>               
                 <div className="row col-6 mx-auto mt-2">
                     <label htmlFor="email">Email</label>
-                    <input type="email" id="email" onChange={handleChange}></input>
+                    <input type="email" id="email" className='form-control' onChange={handleChange}></input>
                 </div>
                 <div className="row col-6 mx-auto mt-2">
                     <label htmlFor="password">Password</label>
-                    <input type="password" id="password" onChange={handleChange}></input>
+                    <input type="password" id="password" className='form-control' onChange={handleChange}></input>
+                </div>
+                <div className="row col-6 mx-auto mt-2">
+                    <label htmlFor="alumnus" className="form-label">Are you an alumnus ?</label>
+                    <select className="form-select" id="alumnus" aria-describedby="validationServer04Feedback" defaultValue={false} onChange={(e) => setFormData({
+                        ...formData , [e.target.id] : e.target.value
+                    })}>
+                    <option value={true}>Yes</option>
+                    <option value={false}>No</option>
+                    </select>
                 </div>
             </form>
         </div>

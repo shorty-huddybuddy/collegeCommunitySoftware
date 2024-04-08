@@ -49,11 +49,11 @@ export default function SignIn() {
         <form>
           <div className="row col-6 mx-auto mt-2">
             <label htmlFor="email">Email</label>
-            <input type="email" id="email" onChange={(e) => setFormData({ ...formData, [e.target.id]: e.target.value })}></input>
+            <input type="email" id="email" onChange={(e) => setFormData({ ...formData, [e.target.id]: e.target.value })} className='form-control'></input>
           </div>
           <div className="row col-6 mx-auto mt-2">
             <label htmlFor="password">Password</label>
-            <input type="password" id="password" onChange={(e) => setFormData({ ...formData, [e.target.id]: e.target.value })}></input>
+            <input type="password" id="password" onChange={(e) => setFormData({ ...formData, [e.target.id]: e.target.value })} className='form-control'></input>
           </div>
           <div className="container mt-4 mx-auto row col-1">
             <button type="submit" className="btn btn-warning" onClick={handleLogin}>Log In</button>
