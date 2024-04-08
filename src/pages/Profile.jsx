@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom'
 
 const UserDetails = () => {
 
-  const [user, setUser] = useState([]);
+  const [user, setUser] = useState({});
 
   const { username } = useParams()
 
@@ -288,7 +288,7 @@ const UserDetails = () => {
   )
   
   return (
-    <div className='container mt-5 bg-dark-subtle'>
+    <div className='container mt-5 bg-dark-subtle border border-warning'>
       <div className='pt-5'>
         <h1 className='text-center text-warning-emphasis'>
           {isLoggedIn && 'Welcome'} {user.name}
@@ -296,7 +296,7 @@ const UserDetails = () => {
       </div>
       <div className='mt-5 text-center'>
         <img src={user.photoURL} className='rounded mx-auto d-block w-25 h-25' alt='profilePhoto' id='profilePhoto'></img>
-        {isLoggedIn && <label htmlFor="photoSelector" style={{cursor : 'pointer'}} className='bg-success p-2 text-white border rounded-3'>Update photo</label>}
+        {isLoggedIn && <label htmlFor="photoSelector" style={{cursor : 'pointer'}} className='bg-success p-2 text-white border rounded-3 mt-3'>Update photo</label>}
         <input type="file" name="fileInput" id="photoSelector" className='visually-hidden' accept="image/*" onChange={handleImageChange}/>
       </div>
       <div className='mt-4 text-center'>

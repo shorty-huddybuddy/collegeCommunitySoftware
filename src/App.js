@@ -11,6 +11,8 @@ import RequestBlood from "./pages/RequestBlood.jsx";
 import TrackBloodRequests from "./pages/TrackBloodRequests.jsx";
 import ViewResponses from "./pages/ViewResponses.jsx";
 import Notification from "./pages/Notification.jsx";
+import CreateJobPost from "./pages/CreateJobPost.jsx";
+import ViewJobPosts from "./pages/ViewJobPosts.jsx";
 
 function App() { 
   return (
@@ -26,6 +28,8 @@ function App() {
       <Route path="/trackBloodRequests" element ={<TrackBloodRequests/>} />
       <Route path="/viewResponses" element={<ViewResponses/>}></Route>
       <Route path="/notifications" element={<Notification/>}/>
+      <Route path="/createJobPost" element={<CreateJobPost/>}/>
+      <Route path="/viewJobPosts" element={<ViewJobPosts/>}></Route>
       </Routes>
     </BrowserRouter>
   );

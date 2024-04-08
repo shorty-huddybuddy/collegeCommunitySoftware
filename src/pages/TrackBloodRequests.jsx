@@ -118,7 +118,7 @@ export default function TrackBloodRequests() {
     ['A-', [ 'A-', 'O-' ]],
     ['B+', [ 'B+', 'B-', 'O+', 'O-' ]],
     ['B-', [ 'B-', 'O-' ]],
-    ['AB+', [ 'A+', 'A-', 'B+', 'B-', 'O+', 'O-' ]],
+    ['AB+', [ 'A+', 'A-', 'AB+', 'AB-', 'B+', 'B-', 'O+', 'O-' ]],
     ['AB-', [ 'A-', 'B-', 'O-' ]],
     ['O+', [ 'O+', 'O-' ]],
     ['O-', [ 'O-' ]],
@@ -132,7 +132,7 @@ export default function TrackBloodRequests() {
       </div>
       <div className='mt-5'>
         {bloodRequests.map((request , index) => (
-          <div className='bg-secondary-subtle mt-4 p-3 d-flex justify-content-evenly' key={request._id}> 
+          <div className='bg-secondary-subtle mt-4 p-3 d-flex justify-content-evenly border border-warning' key={request._id}> 
             <span className=''>Requested Blood Group : {request.BGType}</span>
             <span  className=''>User Requested : {request.userRequested.name.split(' ')[0]}</span>
             <span className=''>Time requested : {request.timeRequested.substr(0,10)}</span>

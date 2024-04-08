@@ -56,7 +56,7 @@ export default function LoggedInHeader() {
         <span className="navbar-toggler-icon"></span>
       </button>
       <div className="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul className="navbar-nav me-auto mb-2 mb-lg-0 px-3">
+        <ul className="navbar-nav me-auto mb-2 mb-lg-0 px-2">
           <li className="nav-item">
             <a className="nav-link" aria-current="page" href="/" id="home"  >Home</a>
           </li>
@@ -64,8 +64,12 @@ export default function LoggedInHeader() {
             <a className="nav-link" aria-current="page" href={`/profile/${user_email}`} id="home"  >My Profile</a>
           </li>
           <li className='nav-item'><a className="nav-link" href="/notifications"  id="notifications"  >Notifications</a></li><li><hr className="dropdown-divider"/></li>
-          <li className="nav-item">
-            <a className="nav-link" aria-current="page" href="/job-board" id="job-board"  >Job Board</a>
+          <li className="nav-item dropdown">
+            <a className="nav-link dropdown-toggle" href='#' role='button' data-bs-toggle = 'dropdown' aria-expanded='false'>Job Board</a>
+            <ul className='dropdown-menu'>
+              <li><a className='dropdown-item' href='/viewJobPosts'id='myProfile'>View Job Posts</a></li>
+              <li><a className='dropdown-item' href='/createJobPost'id='myProfile'>Create new job post</a></li>
+            </ul>
           </li>
           <li className="nav-item dropdown">
             <a className="nav-link dropdown-toggle" href='#' role='button' data-bs-toggle = 'dropdown' aria-expanded='false'>Blood donation</a>

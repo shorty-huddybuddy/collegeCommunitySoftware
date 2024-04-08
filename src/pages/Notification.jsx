@@ -46,7 +46,7 @@ export default function Notification() {
         </div>
         <div className='mt-5'>
         {notifications.map((notification, index) => (
-            <div className='mt-3 d-flex p-3 bg-dark-subtle justify-content-evenly' key={index}>
+            <div className='mt-3 d-flex p-3 bg-dark-subtle justify-content-evenly border border-warning' key={index}>
                 <p className='fw-bold'>{notification.message}</p>
                 <span>Time : {notification.time.substr(0,10)}</span>
                 <a href={notification.link}>

@@ -1,9 +1,11 @@
 import React, { useEffect , useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 export default function ViewResponses() {
 
   const [responses , setResponses] = useState([])
   const user_email = localStorage.getItem('user')
+  const navigate = useNavigate()
 
 
   useEffect(() => {
@@ -36,8 +38,6 @@ export default function ViewResponses() {
 
   },[])
 
-  console.log(responses)
-
   return (
     <div className='mt-5'>
       <div className='container text-center'>
@@ -45,7 +45,7 @@ export default function ViewResponses() {
       </div>
       <div className='mt-5'>
         {responses.map((request) => (
-          <div className='bg-secondary-subtle mt-4 p-3 d-flex justify-content-evenly' key={request._id}> 
+          <div className='bg-secondary-subtle mt-4 p-3 d-flex justify-content-evenly border border-warning' key={request._id}> 
             <span className=''>Requested Blood Group : {request.BGType}</span>
             <span  className=''>User Requested : {request.userRequested.name}</span>
             <span className=''>Time requested : {request.timeRequested.substr(0,10)}</span>

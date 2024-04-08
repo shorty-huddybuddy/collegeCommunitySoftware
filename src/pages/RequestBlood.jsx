@@ -117,7 +117,7 @@ export default function BloodGroupTracking() {
 
 
   return (
-    <div className='mt-5 bg-dark-subtle container py-4'>
+    <div className='mt-5 bg-dark-subtle container py-4 border border-warning'>
         <div className='container text-center'>
             <h1 className='text-warning-emphasis'>Request Blood</h1>
         </div>

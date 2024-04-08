@@ -1,7 +1,7 @@
 import express from "express"
 import cors from "cors"
 import mongoose from "mongoose"
-import { defaultImage } from "./defaultImage.js"
+import { defaultImage , defaultJobImage } from "./defaultImage.js"
 
 mongoose.connect('mongodb://localhost:27017/').then(() => console.log('Connected to database')).catch((error) => console.log(error))
 
@@ -101,11 +101,55 @@ const NotificationSchema = new mongoose.Schema({
   },
   time : {
     type : Date,
-    default : Date.now()
+    required : true
   }
 })
 
 const Notification = mongoose.model('Notification' , NotificationSchema)
+
+const JobPostSchema = new mongoose.Schema({
+  companyName : {
+    type : String,
+    required : true
+  },
+  designation : {
+    type : String,
+    required : true
+  },
+  salary : {
+    type : String,
+    required : true
+  },
+  photoURL : {
+    type : String,
+    default : `${defaultJobImage}`
+  },
+  location : {
+    type : String,
+    required : true
+  },
+  description : {
+    type : String
+  },
+  requirements : {
+    type : String,
+    required : true
+  },
+  userWhoPosted : {
+    type : Object,
+    required : true
+  },
+  link : {
+    type : String,
+    required : true
+  },
+  time : {
+    type : Date,
+    required : true
+  }
+})
+
+const JobPost = mongoose.model('JobPost' , JobPostSchema)
 
 const app=express()
 
@@ -160,7 +204,7 @@ app.post("/auth/create-user" , async (req,res) => {
         message : "Failed to create user",
       });
     }
-});
+})
 
 app.post("/auth/signin" , async (req, res) => {
 
@@ -545,7 +589,8 @@ app.post("/sendNotification" , async(req,res) => {
       message : message,
       userWhoSent : user,
       usersToBeNotified : users,
-      link : link
+      link : link,
+      time : Date.now()
     })
 
     const response = await notification.save()
@@ -592,6 +637,62 @@ app.post("/viewNotifications" , async(req,res) => {
   catch(error){
     console.log(error)
     res.status(500).send({
+      message : 'Internal Server Error'
+    })
+  }
+
+})
+
+app.post("/createJobPost" , async (req, res) => {
+  const { companyName , designation , salary , location , description , photoURL , requirements , user , link } = req.body
+
+  try{
+
+    const jobPost = new JobPost({
+      companyName : companyName,
+      designation : designation,
+      salary : salary,
+      location : location,
+      description : description,
+      photoURL : (photoURL === 'NA' ? defaultJobImage : photoURL),
+      requirements : requirements,
+      userWhoPosted : user,
+      link : link,
+      time : Date.now()
+    })
+
+    const response = await jobPost.save()
+
+    res.status(201).send({
+      message : 'Job Post created succesfully',
+      response
+    })
+
+  }
+  catch(error){
+    console.log(error)
+    res.status(500).send({
+      message : 'Internal Server Error'
+    })
+  }
+
+})
+
+app.get("/viewJobPosts" , async(req,res) => {
+
+  try{
+
+    const jobPosts = await JobPost.find({}).sort({ time : -1})
+
+    res.status(201).send({
+      message : 'Job Posts fetched successfully',
+      jobPosts
+    })
+
+  }
+  catch(error){
+    console.log(error)
+    res.status(500).end({
       message : 'Internal Server Error'
     })
   }
