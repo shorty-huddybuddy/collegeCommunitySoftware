@@ -39,7 +39,7 @@ export default function ViewJobPosts() {
                   <p className='card-text'>Location : <span className='fw-bold'>{jobPost.location}</span></p>
                   <p className='card-text'>Requirements : <span className='fw-bold'>{jobPost.requirements}</span></p>
                   <p className='card-text'>Description : <span className='fw-bold'>{jobPost.description}</span></p>
-                  <p className="card-text"><small className="text-body-secondary">Added on {jobPost.time.substr(0,10)} by <a href={`http://localhost:3000/profile/${jobPost.userWhoPosted.email}`}>{jobPost.userWhoPosted.name}</a></small></p>
+                  <p className="card-text"><small className="text-body-secondary">Added on {jobPost.time.substr(0,10)} by <a className="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" href={`http://localhost:3000/profile/${jobPost.userWhoPosted.email}`}>{jobPost.userWhoPosted.name}</a></small></p>
                   <a href={jobPost.link}>
                     <button className='btn btn-outline-danger'>Apply Now</button>
                   </a>

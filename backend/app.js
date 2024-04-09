@@ -1,7 +1,7 @@
 import express from "express"
 import cors from "cors"
 import mongoose from "mongoose"
-import { defaultImage , defaultJobImage } from "./defaultImage.js"
+import { defaultImage , defaultJobImage , defaultItemImage } from "./defaultImage.js"
 
 mongoose.connect('mongodb://localhost:27017/').then(() => console.log('Connected to database')).catch((error) => console.log(error))
 
@@ -154,6 +154,35 @@ const JobPostSchema = new mongoose.Schema({
 })
 
 const JobPost = mongoose.model('JobPost' , JobPostSchema)
+
+const ItemSchema = new mongoose.Schema({
+  name : {
+    type : String,
+    required : true
+  },
+  time : {
+    type : Date, 
+    required : true
+  },
+  photoURL : {
+    type : String,
+  },
+  userReporting : {
+    type : Object,
+    required : true
+  },
+  description : {
+    type : String,
+    required : true
+  },
+  status : {
+    type : Boolean,
+    default : false
+  }
+  
+})
+
+const Item = mongoose.model('Item' , ItemSchema)
 
 const app=express()
 
@@ -420,6 +449,45 @@ app.put("/user/updatePhone" , async (req, res) => {
 
   }
   catch(error){
+    return res.status(500).send({
+      message : 'Internal server error'
+    })
+  }
+
+})
+
+app.put("/user/updateAlumnus" , async (req, res) => {
+  const { email , alumnus} = req.body
+
+  if(!email || !alumnus){
+    return res.status(400).send({
+      message : 'All fields are necessary'
+    })
+  }
+
+  const user = await User.findOne( { email })
+
+  if(!user){
+    return res.status(401).send({
+      message : 'No such user found'
+    })
+  }
+
+  try{
+    await User.findOneAndUpdate(
+      {email : email},
+      {alumnus : alumnus},
+      {new : true}
+    )
+
+    return res.status(201).send({
+      message : 'Alumnus status has been updated',
+      alumnus
+    })
+
+  }
+  catch(error){
+    console.log(error)
     return res.status(500).send({
       message : 'Internal server error'
     })
@@ -699,6 +767,90 @@ app.get("/viewJobPosts" , async(req,res) => {
   catch(error){
     console.log(error)
     res.status(500).end({
+      message : 'Internal Server Error'
+    })
+  }
+
+})
+
+app.post("/reportItem" , async(req,res) => {
+
+  const { name , description , photoURL , user } = req.body
+  
+    try{
+
+      const item = new Item({
+        name ,
+        time : Date.now(),
+        userReporting : user,
+        photoURL : (photoURL === 'NA' ? defaultItemImage : photoURL),
+        description
+      })
+
+      const response = await item.save()
+
+      res.status(201).send({
+        message : 'Item reported successfully',
+        response
+      })
+
+    }
+    catch(error){
+      console.log(error)
+      res.status(500).send({
+        message : 'Internal server error'
+      })
+    }
+
+})
+
+app.get("/viewItems" , async (req,res) =>{
+
+  const { user } = req.query
+
+  let items
+
+  try{
+    if(user != 'all')
+    items = await Item.find({ 'userReporting.email' : user }).sort({ time : -1 })
+    else
+    items = await Item.find({}).sort({ time : -1 })
+
+    res.status(201).send({
+      message : 'Fetched items successfully',
+      items
+    })
+
+  }
+  catch(error){
+    console.log(error)
+    res.status(500).send({
+      message : 'Internal Server Error'
+    })
+  }
+
+})
+
+app.put("/updateResolvedStatus" , async(req, res) => {
+
+  const { id , status } = req.body
+
+  try{
+
+    await Item.findOneAndUpdate({
+      _id: id,  // Update based on a unique field
+    }, {
+      status: !status
+    })    
+
+    res.status(201).send({
+      message : 'Resolved status changed successfully'
+    })
+
+  }
+  catch(error){
+    console.log(error)
+    res.status(500).send({
       message : 'Internal Server Error'
     })
   }

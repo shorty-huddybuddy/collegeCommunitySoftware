@@ -133,13 +133,12 @@ export default function TrackBloodRequests() {
       <div className='mt-5'>
         {bloodRequests.map((request , index) => (
           <div className='bg-secondary-subtle mt-4 p-3 d-flex justify-content-evenly border border-warning' key={request._id}> 
-            <span className=''>Requested Blood Group : {request.BGType}</span>
-            <span  className=''>User Requested : {request.userRequested.name.split(' ')[0]}</span>
-            <span className=''>Time requested : {request.timeRequested.substr(0,10)}</span>
-            <button className='btn btn-outline-secondary ' onClick={(e) => navigate(`/profile/${request.userRequested.email}`)}>View Patient Profile</button>
-            <span className=''>Request Fulfilled : {request.fulfilled ? 'Yes' : 'No'}</span>
+            <span className=''>Requested Blood Group : <span className='fw-bold'>{request.BGType}</span></span>
+            <span  className=''>User Requested : <a href={`/profile/${request.userRequested.email}`} className="link-danger link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">{request.userRequested.name.split(' ')[0]}</a></span>
+            <span className=''>Time requested : <span className='fw-bold'>{request.timeRequested.substr(0,10)}</span></span>
+            <span className=''>Request Fulfilled : <span className='fw-bold'>{request.fulfilled ? 'Yes' : 'No'}</span></span>
             {user_email !== request.userRequested.email && !request.fulfilled && <button className='ms-5 btn btn-outline-danger' onClick={(e) => handleDonatation(e , request._id , index)}>Donate Blood</button>}
-            {request.fulfilled && <span className=''>Donated User : {request.userDonated.name}</span>}
+            {request.fulfilled && <span className=''>Donated User : <a href="#" className="link-danger link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">{request.userDonated.name}</a></span>}
             <div className='text-center mt-2'>
               <div className="btn-group">
                 <button type="button" className="btn btn-outline-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">

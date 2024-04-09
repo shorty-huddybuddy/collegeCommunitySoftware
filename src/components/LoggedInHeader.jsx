@@ -56,7 +56,7 @@ export default function LoggedInHeader() {
         <span className="navbar-toggler-icon"></span>
       </button>
       <div className="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul className="navbar-nav me-auto mb-2 mb-lg-0 px-2">
+        <ul className="navbar-nav me-auto mb-2 mb-lg-0">
           <li className="nav-item">
             <a className="nav-link" aria-current="page" href="/" id="home"  >Home</a>
           </li>
@@ -72,14 +72,21 @@ export default function LoggedInHeader() {
             </ul>
           </li>
           <li className="nav-item dropdown">
+            <a className="nav-link dropdown-toggle" href='#' role='button' data-bs-toggle = 'dropdown' aria-expanded='false'>Lost & Found</a>
+            <ul className='dropdown-menu'>
+              <li><a className='dropdown-item' href='/viewItems'id='myProfile'>View reported items</a></li>
+              <li><a className='dropdown-item' href='/reportItem'id='myProfile'>Report an item</a></li>
+              <li><a className='dropdown-item' href='/yourItems'id='myProfile'>Your Items</a></li>
+            </ul>
+          </li>
+          <li className="nav-item dropdown">
             <a className="nav-link dropdown-toggle" href='#' role='button' data-bs-toggle = 'dropdown' aria-expanded='false'>Blood donation</a>
             <ul className='dropdown-menu'>
               <li><a className='dropdown-item' href='/trackBloodRequests'id='myProfile'>Track Blood Requests</a></li>
               <li><a className='dropdown-item' href='/requestBlood' id='myProfile'>Request Blood</a></li>
-              <li><a className='dropdown-item' href='/viewResponses'id='myProfile'>View responses</a></li>
+              <li><a className='dropdown-item' href='/viewResponses'id='myProfile'>Your requests</a></li>
             </ul>
           </li>
-          <li className='nav-item'><a className="nav-link" href="/lost-and-found"  id="lost-and-found"  >Lost and Found</a></li>
           <li className='nav-item'><a className="nav-link" href="/event-calender"  id="event-calender"  >Event Calender</a></li><li><a className="nav-link" href="/resource-hub"  id="resource-hub">Resource Hub</a></li>
           <li className='nav-item'><a className="nav-link" href="/alumni-stories"  id="alumni-stories"  >Alumni Stories</a></li>
           <li className="nav-item">

@@ -46,13 +46,11 @@ export default function ViewResponses() {
       <div className='mt-5'>
         {responses.map((request) => (
           <div className='bg-secondary-subtle mt-4 p-3 d-flex justify-content-evenly border border-warning' key={request._id}> 
-            <span className=''>Requested Blood Group : {request.BGType}</span>
-            <span  className=''>User Requested : {request.userRequested.name}</span>
-            <span className=''>Time requested : {request.timeRequested.substr(0,10)}</span>
-            <button className='btn btn-outline-secondary ' onClick={(e) => navigate(`/profile/${request.userRequested.email}`)}>View Patient Profile</button>
-            <span className=''>Request Fulfilled : {request.fulfilled ? 'Yes' : 'No'}</span>
-            {user_email !== request.userRequested.email && !request.fulfilled && <button className=' btn btn-outline-danger' onClick={(e) => handleDonatation(e , request._id)}>Donate Blood</button>}
-            {request.fulfilled && <span className='ms-5'>Donated User : {request.userDonated.name}</span>}
+            <span className=''>Requested Blood Group : <span className='fw-bold'>{request.BGType}</span></span>
+            <span  className=''>User Requested : <a href={`/profile/${request.userRequested.email}`} className="link-danger link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">{request.userRequested.name.split(' ')[0]}</a></span>
+            <span className=''>Time requested : <span className='fw-bold'>{request.timeRequested.substr(0,10)}</span></span>
+            <span className=''>Request Fulfilled : <span className='fw-bold'>{request.fulfilled ? 'Yes' : 'No'}</span></span>
+            {request.fulfilled && <span className=''>Donated User : <a href="#" className="link-danger link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">{request.userDonated.name}</a></span>}
           </div>
         ))}
       </div>

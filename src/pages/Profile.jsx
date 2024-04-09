@@ -7,6 +7,7 @@ import { useParams } from 'react-router-dom'
 const UserDetails = () => {
 
   const [user, setUser] = useState({});
+  const [alumnusToggle , setAlumnusToggle] = useState(true)
 
   const { username } = useParams()
 
@@ -243,6 +244,66 @@ const UserDetails = () => {
   )
 
   const [phoneNumber , setPhoneNumber] = useState(user.phoneNumber)
+  
+  const updateAlumnus = async (e) => {
+
+    const { email } = user
+
+    try {
+      const response = await fetch('http://localhost:5000/user/updateAlumnus', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email, alumnus })
+      });
+  
+      const data = await response.json()
+
+      if (!response.ok) {
+        alert(`${data.message}`)
+        return
+      }
+
+      alert(`${data.message}`)
+      window.location.reload()
+
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  const [alumnus , setAlumnus] = useState(user.alumnus)
+
+  const defaultAlumnus = (
+    <div className='col-6 mx-auto'>
+      <label htmlFor="alumnus">Are you an alumnus</label>
+      <select id='alumnus'  defaultValue={false} onChange={(e) => setAlumnus(e.target.value)} className='ms-3'>
+      <option value={false}>No</option>
+      <option value={true}>Yes</option>
+      </select>
+      <button className='btn'>
+        {alumnusToggle && <i className="bi bi-check-circle-fill text-success"></i>}
+      </button>
+    </div>
+  )
+
+  const Alumnus = (
+    <div>
+      {alumnusToggle && <span>{user.name} is {user.alumnus ? '' : 'not'} an alumnus</span>}
+      <button className='btn' onClick={() => setAlumnusToggle(false)}>
+        {(alumnusToggle && isLoggedIn) && <i className='bi bi-pencil-fill'></i>}
+      </button>
+      {!alumnusToggle && <div><label htmlFor="alumnus">Are you an alumnus</label>
+      <select id='alumnus'  defaultValue={false} onChange={(e) => setAlumnus(e.target.value)} className='ms-3'>
+      <option value={false}>No</option>
+      <option value={true}>Yes</option>
+      </select></div>}
+      <button className='btn' onClick = {updateAlumnus}>
+        {!alumnusToggle && <i className="bi bi-check-circle-fill text-success"></i>}
+      </button>
+    </div>
+  )
 
   const updatePhone = async (e) => {
 
@@ -305,8 +366,11 @@ const UserDetails = () => {
       <div className='mt-4 text-center'>
         {(!isLoggedIn) ? PhoneNumber : PhoneNumber}
       </div>
-      <div className='mt-4 text-center pb-5'>
+      <div className='mt-4 text-center'>
         {(!isLoggedIn) ? PassoutYear : (user.passoutYear ? PassoutYear : defaultPassoutYear)}
+      </div>
+      <div className='mt-4 text-center pb-5'>
+        {(!isLoggedIn) ? Alumnus : (user.passoutYear ? Alumnus : defaultAlumnus)}
       </div>
     </div>
   )

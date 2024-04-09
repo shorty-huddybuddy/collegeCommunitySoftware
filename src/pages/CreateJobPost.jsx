@@ -63,12 +63,12 @@ export default function CreateJobPost() {
       }
 
 
-    const handleImageChange = async (event) => {
+    const handleImageChange = (event) => {
         
         const imageFile = event.target.files[0];
         const reader = new FileReader();
       
-        reader.onloadend = async () => {
+        reader.onloadend = () => {
           // Process the image data (e.g., display preview)
           const imageURL = reader.result
             setFormData({

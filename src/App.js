@@ -13,6 +13,9 @@ import ViewResponses from "./pages/ViewResponses.jsx";
 import Notification from "./pages/Notification.jsx";
 import CreateJobPost from "./pages/CreateJobPost.jsx";
 import ViewJobPosts from "./pages/ViewJobPosts.jsx";
+import ReportItem from "./pages/ReportItem.jsx";
+import ViewItems from "./pages/ViewItems.jsx";
+import YourItems from "./pages/YourItems.jsx";
 
 function App() { 
   return (
@@ -30,6 +33,9 @@ function App() {
       <Route path="/notifications" element={<Notification/>}/>
       <Route path="/createJobPost" element={<CreateJobPost/>}/>
       <Route path="/viewJobPosts" element={<ViewJobPosts/>}></Route>
+      <Route path="/reportItem" element = {<ReportItem/>}></Route>
+      <Route path="/viewItems" element = {<ViewItems/>}></Route>
+      <Route path="/yourItems" element = {<YourItems/>}></Route>
       </Routes>
     </BrowserRouter>
   );
