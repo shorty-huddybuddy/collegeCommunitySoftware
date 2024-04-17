@@ -16,6 +16,7 @@ import ViewJobPosts from "./pages/ViewJobPosts.jsx";
 import ReportItem from "./pages/ReportItem.jsx";
 import ViewItems from "./pages/ViewItems.jsx";
 import YourItems from "./pages/YourItems.jsx";
+import CollegeResources from "./pages/CollegeResources.jsx";
 
 function App() { 
   return (
@@ -36,6 +37,7 @@ function App() {
       <Route path="/reportItem" element = {<ReportItem/>}></Route>
       <Route path="/viewItems" element = {<ViewItems/>}></Route>
       <Route path="/yourItems" element = {<YourItems/>}></Route>
+      <Route path="/collegeResources" element = {<CollegeResources/>}></Route>
       </Routes>
     </BrowserRouter>
   );

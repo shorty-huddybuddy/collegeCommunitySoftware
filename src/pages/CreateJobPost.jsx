@@ -95,6 +95,7 @@ export default function CreateJobPost() {
         const photoURL = formData.photoURL
         const requirements = formData.requirements
         const link = formData.link
+        const approvedByAdmin = ( user.alumnus ? true : false )
           
 
         try{
@@ -104,7 +105,7 @@ export default function CreateJobPost() {
                 headers: {
                   'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({companyName , designation , salary , location , description , photoURL , requirements , user , link})
+                body: JSON.stringify({companyName , designation , salary , location , description , photoURL , requirements , user , link , approvedByAdmin})
               });
             
 
@@ -121,7 +122,8 @@ export default function CreateJobPost() {
             alert('Could not create job post')
         }
 
-        try{
+        if(approvedByAdmin)
+        {try{
 
             const usersExceptMe = users
             for(let i = 0; i < usersExceptMe.length ; i ++ ){
@@ -151,7 +153,7 @@ export default function CreateJobPost() {
             console.log(error)
             alert('Could not notify other users')
           }
-        
+        }
 
       }
 

@@ -150,6 +150,10 @@ const JobPostSchema = new mongoose.Schema({
   time : {
     type : Date,
     required : true
+  },
+  approvedByAdmin : {
+    type : Boolean,
+    required : true
   }
 })
 
@@ -183,6 +187,52 @@ const ItemSchema = new mongoose.Schema({
 })
 
 const Item = mongoose.model('Item' , ItemSchema)
+
+const ProgramSchema = new mongoose.Schema({
+  name : {
+    type : String,
+    required : true
+  }
+})
+
+const Progarm = mongoose.model('Program' , ProgramSchema)
+
+const SemesterSchema = new mongoose.Schema({
+  program : {
+    type : Object,
+    required : true
+  },
+  number : {
+    type : Number,
+    required : true
+  }
+})
+
+const Semester = mongoose.model('Semester' , SemesterSchema)
+
+const SubjectSchema = new mongoose.Schema({
+  name : {
+    type : String,
+    required : true
+  },
+  semester : {
+    type : Object,
+    required : true
+  }
+})
+
+const Subject = mongoose.model('Subject' , SubjectSchema)
+
+const ResourceSchema = new mongoose.Schema({
+  name : {
+    type : String,
+    required : true
+  },
+  subject : {
+    type : Object
+  }
+
+})
 
 const app=express()
 
@@ -718,7 +768,7 @@ app.post("/viewNotifications" , async(req,res) => {
 })
 
 app.post("/createJobPost" , async (req, res) => {
-  const { companyName , designation , salary , location , description , photoURL , requirements , user , link } = req.body
+  const { companyName , designation , salary , location , description , photoURL , requirements , user , link , approvedByAdmin } = req.body
 
   try{
 
@@ -732,7 +782,8 @@ app.post("/createJobPost" , async (req, res) => {
       requirements : requirements,
       userWhoPosted : user,
       link : link,
-      time : Date.now()
+      time : Date.now(),
+      approvedByAdmin
     })
 
     const response = await jobPost.save()
@@ -756,7 +807,7 @@ app.get("/viewJobPosts" , async(req,res) => {
 
   try{
 
-    const jobPosts = await JobPost.find({}).sort({ time : -1})
+    const jobPosts = await JobPost.find({ approvedByAdmin : true }).sort({ time : -1})
 
     res.status(201).send({
       message : 'Job Posts fetched successfully',
@@ -855,4 +906,9 @@ app.put("/updateResolvedStatus" , async(req, res) => {
     })
   }
 
+})
+
+app.post('/collegeResources' , async(req,res) => {
+  app.use(bodyParser.urlencoded({ extended: true })); 
+  console.log(req.body)
 })
