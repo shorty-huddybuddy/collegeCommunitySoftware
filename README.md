@@ -93,4 +93,3 @@ npm start
 
 
 
-*(Add screenshots like homepage, profile page, etc. if needed)*
