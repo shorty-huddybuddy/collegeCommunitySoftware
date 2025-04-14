@@ -3,11 +3,6 @@
 A full-stack community web platform built for the students of IIIT-Allahabad.  
 This platform enables communication, collaboration, and resource sharing among peers.
 
-## 🌐 Live Demo
-
-*(Add your deployment link here if hosted)*
-
----
 
 ## 📁 Folder Structure
 
@@ -87,33 +82,6 @@ npm start
 > - Frontend runs at `http://localhost:3000`
 > - Backend runs at `http://localhost:5000`
 
----
 
-## 🌱 Environment Variables
-
-Create a `.env` file in the `backend/` directory:
-
-```env
-PORT=5000
-MONGO_URI=your_mongodb_connection_string
-JWT_SECRET=your_secret_key
-```
-
----
-
-## 🤝 Contributors
-
-- [Your Name](https://github.com/<your-username>) *(Add others here)*
-
----
-
-## 📌 License
-
-This project is licensed under the MIT License.  
-Feel free to use, modify, and share!
-
----
-
-## 📷 Screenshots
 
 *(Add screenshots like homepage, profile page, etc. if needed)*
