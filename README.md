@@ -1,42 +1,119 @@
-# 🌐 Connect IIITA
+# Connect IIITA 💬
 
-**Connect IIITA** is a community platform designed for the students and staff of IIIT-Allahabad to interact, share resources, explore job opportunities, and much more — all in one place!
+A full-stack community web platform built for the students of IIIT-Allahabad.  
+This platform enables communication, collaboration, and resource sharing among peers.
 
-> A full-stack web application built using **React**, **Node.js**, and **MongoDB**.
+## 🌐 Live Demo
+
+*(Add your deployment link here if hosted)*
 
 ---
 
-## 📸 Homepage Preview
+## 📁 Folder Structure
 
-![Connect IIITA Homepage](./path-to-your-image.png)
+```
+COLLEGECOMMUNITYWEBSITE/
+├── backend/                 # Express.js backend
+│   ├── app.js
+│   ├── defaultImage.js
+│   ├── package.json
+│   └── ... other backend logic
+│
+├── public/                  # React public files
+│   ├── index.html
+│   ├── logo512.png
+│   └── ...
+│
+├── src/                     # React source files
+│   ├── assets/              # Images, icons, etc.
+│   ├── components/          # Reusable UI components
+│   ├── pages/               # Main page views
+│   ├── App.js
+│   ├── index.js
+│   └── ... styles & utils
+│
+├── .gitignore
+├── package.json             # React project dependencies
+└── README.md
+```
+
+---
+
+## 🛠 Tech Stack
+
+- **Frontend:** React.js
+- **Backend:** Node.js + Express.js
+- **Database:** MongoDB
+- **Version Control:** Git & GitHub
 
 ---
 
 ## 🚀 Features
 
-- 🧑‍💼 Profile Management
-- 📢 Notifications Panel
-- 💼 Job Board
-- 📦 Lost & Found
-- 🩸 Blood Donation Portal
-- 📚 Resource Hub
-- 💬 Messaging System
-- 🔍 Search Functionality
-- 🔐 Secure Authentication
+- 👥 Student community feed and messaging
+- 📢 Job board, Lost & Found, Blood donation portal
+- 🔔 Notifications and alerts
+- 📁 Resource Hub with categorized notes and links
+- 🔒 Auth system and user profiles
 
 ---
 
-## 🛠️ Tech Stack
+## 📦 Installation
 
-| Layer        | Tech                |
-|--------------|---------------------|
-| Frontend     | React, Tailwind CSS |
-| Backend      | Node.js, Express    |
-| Database     | MongoDB             |
-| Authentication | JWT                |
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/<your-username>/connectiiita.git
+cd connectiiita
+```
+
+### 2. Setup the backend
+
+```bash
+cd backend
+npm install
+npm start
+```
+
+### 3. Setup the frontend
+
+```bash
+cd ..
+npm install
+npm start
+```
+
+> By default:
+> - Frontend runs at `http://localhost:3000`
+> - Backend runs at `http://localhost:5000`
 
 ---
 
-## 🧾 Folder Structure
+## 🌱 Environment Variables
 
-COLLEGECOMMUNITYWEBSITE/ ├── backend/ # Express.js backend │ ├── app.js │ ├── defaultImage.js │ ├── package.json │ └── ... other backend logic │ ├── public/ # React public files │ ├── index.html │ ├── logo512.png │ └── ... │ ├── src/ # React source files │ ├── assets/ # Images, icons, etc. │ ├── components/ # Reusable UI components │ ├── pages/ # Main page views │ ├── App.js │ ├── index.js │ └── ... styles & utils │ ├── .gitignore ├── package.json # React project dependencies ├── README.md
+Create a `.env` file in the `backend/` directory:
+
+```env
+PORT=5000
+MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=your_secret_key
+```
+
+---
+
+## 🤝 Contributors
+
+- [Your Name](https://github.com/<your-username>) *(Add others here)*
+
+---
+
+## 📌 License
+
+This project is licensed under the MIT License.  
+Feel free to use, modify, and share!
+
+---
+
+## 📷 Screenshots
+
+*(Add screenshots like homepage, profile page, etc. if needed)*
