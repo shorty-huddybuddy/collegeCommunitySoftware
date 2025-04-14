@@ -1,70 +1,95 @@
-# Getting Started with Create React App
+# Connect IIITA 💬
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A full-stack community web platform built for the students of IIIT-Allahabad.  
+This platform enables communication, collaboration, and resource sharing among peers.
 
-## Available Scripts
 
-In the project directory, you can run:
+---
 
-### `npm start`
+## 📸 Homepage Preview
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+![Connect IIITA Homepage](./image.png)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+---
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 📁 Folder Structure
 
-### `npm run build`
+```
+COLLEGECOMMUNITYWEBSITE/
+├── backend/                 # Express.js backend
+│   ├── app.js
+│   ├── defaultImage.js
+│   ├── package.json
+│   └── ... other backend logic
+│
+├── public/                  # React public files
+│   ├── index.html
+│   ├── logo512.png
+│   └── ...
+│
+├── src/                     # React source files
+│   ├── assets/              # Images, icons, etc.
+│   ├── components/          # Reusable UI components
+│   ├── pages/               # Main page views
+│   ├── App.js
+│   ├── index.js
+│   └── ... styles & utils
+│
+├── .gitignore
+├── package.json             # React project dependencies
+└── README.md
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+---
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## 🛠 Tech Stack
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- **Frontend:** React.js
+- **Backend:** Node.js + Express.js
+- **Database:** MongoDB
+- **Version Control:** Git & GitHub
 
-### `npm run eject`
+---
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## 🚀 Features
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- 👥 Student community feed and messaging
+- 📢 Job board, Lost & Found, Blood donation portal
+- 🔔 Notifications and alerts
+- 📁 Resource Hub with categorized notes and links
+- 🔒 Auth system and user profiles
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+---
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## 📦 Installation
 
-## Learn More
+### 1. Clone the repository
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```bash
+git clone https://github.com/<your-username>/connectiiita.git
+cd connectiiita
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### 2. Setup the backend
 
-### Code Splitting
+```bash
+cd backend
+npm install
+npm start
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### 3. Setup the frontend
 
-### Analyzing the Bundle Size
+```bash
+cd ..
+npm install
+npm start
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+> By default:
+> - Frontend runs at `http://localhost:3000`
+> - Backend runs at `http://localhost:5000`
 
-### Making a Progressive Web App
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
 
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
