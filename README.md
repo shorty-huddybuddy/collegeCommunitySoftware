@@ -4,6 +4,15 @@ A full-stack community web platform built for the students of IIIT-Allahabad.
 This platform enables communication, collaboration, and resource sharing among peers.
 
 
+---
+
+## 📸 Homepage Preview
+
+![Connect IIITA Homepage](./image.png)
+
+---
+
+
 ## 📁 Folder Structure
 
 ```
